@@ -1,0 +1,210 @@
+@import "tailwindcss";
+
+@keyframes spinReverse {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes orbFloat {
+  0%, 100% {
+    transform: translate3d(0, 0px, 0);
+  }
+  50% {
+    transform: translate3d(0, -8px, 0);
+  }
+}
+
+@keyframes orbPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.035);
+    opacity: 1;
+  }
+}
+
+@keyframes ringRotate1 {
+  from {
+    transform: rotateX(70deg) rotateY(15deg) rotateZ(0deg);
+  }
+  to {
+    transform: rotateX(70deg) rotateY(15deg) rotateZ(360deg);
+  }
+}
+
+@keyframes ringRotate2 {
+  from {
+    transform: rotateX(20deg) rotateY(65deg) rotateZ(360deg);
+  }
+  to {
+    transform: rotateX(20deg) rotateY(65deg) rotateZ(0deg);
+  }
+}
+
+@keyframes ringRotate3 {
+  from {
+    transform: rotateX(80deg) rotateY(-25deg) rotateZ(0deg);
+  }
+  to {
+    transform: rotateX(80deg) rotateY(-25deg) rotateZ(360deg);
+  }
+}
+
+@keyframes ringRotate4 {
+  from {
+    transform: rotateX(-35deg) rotateY(75deg) rotateZ(0deg);
+  }
+  to {
+    transform: rotateX(-35deg) rotateY(75deg) rotateZ(-360deg);
+  }
+}
+
+@keyframes ringRotate5 {
+  from {
+    transform: rotateX(85deg) rotateY(0deg) rotateZ(0deg);
+  }
+  to {
+    transform: rotateX(85deg) rotateY(0deg) rotateZ(360deg);
+  }
+}
+
+@keyframes ringRotate6 {
+  from {
+    transform: rotateX(10deg) rotateY(-80deg) rotateZ(360deg);
+  }
+  to {
+    transform: rotateX(10deg) rotateY(-80deg) rotateZ(0deg);
+  }
+}
+
+@keyframes ringRotate7 {
+  from {
+    transform: rotateX(55deg) rotateY(45deg) rotateZ(0deg);
+  }
+  to {
+    transform: rotateX(55deg) rotateY(45deg) rotateZ(360deg);
+  }
+}
+
+@keyframes ringRotate8 {
+  from {
+    transform: rotateX(-60deg) rotateY(-30deg) rotateZ(360deg);
+  }
+  to {
+    transform: rotateX(-60deg) rotateY(-30deg) rotateZ(0deg);
+  }
+}
+
+@keyframes scanWave {
+  0% {
+    transform: translateY(-120%);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.9;
+  }
+  85% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(180%);
+    opacity: 0;
+  }
+}
+
+@keyframes coreWave {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.9;
+    border-color: rgba(0, 229, 255, 0.8);
+  }
+  100% {
+    transform: scale(2.1);
+    opacity: 0;
+    border-color: rgba(124, 77, 255, 0);
+  }
+}
+
+@keyframes floatParticle {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.35;
+  }
+  50% {
+    transform: translate3d(18px, -28px, 10px) scale(1.25);
+    opacity: 0.85;
+  }
+}
+
+.animate-orb-float {
+  animation: orbFloat 6s ease-in-out infinite;
+}
+
+.animate-orb-pulse {
+  animation: orbPulse 3s ease-in-out infinite;
+}
+
+.animate-ring-1 {
+  animation: ringRotate1 22s linear infinite;
+}
+
+.animate-ring-2 {
+  animation: ringRotate2 18s linear infinite;
+}
+
+.animate-ring-3 {
+  animation: ringRotate3 26s linear infinite;
+}
+
+.animate-ring-4 {
+  animation: ringRotate4 20s linear infinite;
+}
+
+.animate-ring-5 {
+  animation: ringRotate5 30s linear infinite;
+}
+
+.animate-ring-6 {
+  animation: ringRotate6 16s linear infinite;
+}
+
+.animate-ring-7 {
+  animation: ringRotate7 24s linear infinite;
+}
+
+.animate-ring-8 {
+  animation: ringRotate8 28s linear infinite;
+}
+
+/* Fast modes when listening or speaking */
+.animate-ring-1-fast { animation: ringRotate1 9s linear infinite; }
+.animate-ring-2-fast { animation: ringRotate2 7s linear infinite; }
+.animate-ring-3-fast { animation: ringRotate3 11s linear infinite; }
+.animate-ring-4-fast { animation: ringRotate4 8s linear infinite; }
+.animate-ring-5-fast { animation: ringRotate5 12s linear infinite; }
+.animate-ring-6-fast { animation: ringRotate6 6s linear infinite; }
+.animate-ring-7-fast { animation: ringRotate7 10s linear infinite; }
+.animate-ring-8-fast { animation: ringRotate8 11s linear infinite; }
+
+.animate-scan-wave {
+  animation: scanWave 2.5s ease-in-out infinite;
+}
+
+.animate-core-wave {
+  animation: coreWave 2s cubic-bezier(0.1, 0.8, 0.3, 1) infinite;
+}
+
+.animate-spin-reverse {
+  animation: spinReverse 12s linear infinite;
+}
+
+.animate-float-particle {
+  animation: floatParticle 8s ease-in-out infinite;
+}
+

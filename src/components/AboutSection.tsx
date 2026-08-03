@@ -1,0 +1,131 @@
+import React from 'react';
+import { Code2, Server, Cpu, Database, Layers, Sparkles, Terminal, Globe, Briefcase, Calendar, CheckCircle } from 'lucide-react';
+import { motion } from 'motion/react';
+import { WORK_EXPERIENCE } from '../data/portfolioData';
+
+export const AboutSection: React.FC = () => {
+  const skills = [
+    { name: 'TypeScript / JavaScript', category: 'Languages', level: 'Expert', icon: Code2 },
+    { name: 'React 19 & Next.js', category: 'Frontend', level: 'Expert', icon: Layers },
+    { name: 'Node.js & Express', category: 'Backend', level: 'Advanced', icon: Server },
+    { name: 'Gemini AI & LLMs', category: 'AI Integration', level: 'Advanced', icon: Cpu },
+    { name: 'Tailwind CSS & Motion', category: 'Styling', level: 'Expert', icon: Sparkles },
+    { name: 'REST & WebSockets', category: 'Networking', level: 'Advanced', icon: Globe },
+    { name: 'Cloud & Docker', category: 'DevOps', level: 'Proficient', icon: Terminal },
+    { name: 'Databases & ORMs', category: 'Storage', level: 'Proficient', icon: Database },
+  ];
+
+  return (
+    <section id="about" className="py-20 bg-slate-900/50 border-t border-slate-800/60 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-center max-w-3xl mx-auto mb-16 space-y-4"
+        >
+          <h2 className="text-xs uppercase font-mono font-bold tracking-widest text-cyan-400">About Me</h2>
+          <h3 className="text-3xl sm:text-4xl font-extrabold text-slate-100">
+            Passionate About Building Intuitive, Performant Software
+          </h3>
+          <p className="text-slate-400 text-base leading-relaxed">
+            I am a full-stack engineer who loves bridging complex backend algorithms with sleek, responsive web frontends. From building modern web interfaces to embedding Gemini AI assistants, I focus on clean code and robust architecture.
+          </p>
+        </motion.div>
+
+        {/* Technical Capabilities Grid */}
+        <div className="mb-20">
+          <h4 className="text-xl font-bold text-slate-200 mb-6 flex items-center gap-2">
+            <Cpu className="w-5 h-5 text-cyan-400" />
+            <span>Technical Skills Matrix</span>
+          </h4>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {skills.map((skill, idx) => {
+              const Icon = skill.icon;
+              return (
+                <motion.div
+                  key={skill.name}
+                  initial={{ opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.35, delay: idx * 0.05 }}
+                  className="p-5 rounded-2xl bg-slate-950/70 border border-slate-800 hover:border-slate-700 transition-all hover:-translate-y-1 group backdrop-blur-md shadow-lg"
+                >
+                  <div className="w-10 h-10 rounded-xl bg-indigo-950/60 border border-indigo-800/40 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <Icon className="w-5 h-5 text-indigo-400 group-hover:text-cyan-300 transition-colors" />
+                  </div>
+                  <div className="text-xs text-slate-500 font-mono mb-1">{skill.category}</div>
+                  <div className="font-bold text-slate-100 text-base mb-2">{skill.name}</div>
+                  <span className="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-slate-800 text-cyan-400 border border-slate-700">
+                    {skill.level}
+                  </span>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Career & Work Experience Timeline */}
+        <div>
+          <h4 className="text-xl font-bold text-slate-200 mb-8 flex items-center gap-2">
+            <Briefcase className="w-5 h-5 text-indigo-400" />
+            <span>Work & Engineering Timeline</span>
+          </h4>
+
+          <div className="relative border-l-2 border-slate-800 ml-4 pl-6 sm:pl-8 space-y-10">
+            {WORK_EXPERIENCE.map((exp, idx) => (
+              <motion.div
+                key={exp.id}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: idx * 0.1 }}
+                className="relative"
+              >
+                {/* Timeline Dot */}
+                <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 w-4 h-4 rounded-full bg-slate-950 border-2 border-indigo-500 shadow-[0_0_10px_rgba(99,102,241,0.6)] flex items-center justify-center">
+                  <div className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                </div>
+
+                <div className="p-6 rounded-2xl bg-slate-950/80 border border-slate-800/80 backdrop-blur-md shadow-xl hover:border-slate-700 transition-all">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+                    <div>
+                      <h5 className="text-lg font-bold text-slate-100">{exp.role}</h5>
+                      <span className="text-sm font-medium text-cyan-400">{exp.company}</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-xs font-mono text-slate-400 w-fit">
+                      <Calendar className="w-3.5 h-3.5 text-indigo-400" />
+                      <span>{exp.period}</span>
+                    </div>
+                  </div>
+
+                  <p className="text-sm text-slate-300 leading-relaxed mb-4">{exp.description}</p>
+
+                  <div className="space-y-2 mb-4">
+                    {exp.achievements.map((ach, aIdx) => (
+                      <div key={aIdx} className="flex items-start gap-2 text-xs text-slate-400">
+                        <CheckCircle className="w-3.5 h-3.5 text-emerald-400 mt-0.5 shrink-0" />
+                        <span>{ach}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="flex flex-wrap gap-2 pt-2 border-t border-slate-900">
+                    {exp.technologies.map((tech) => (
+                      <span key={tech} className="px-2.5 py-0.5 rounded-md bg-indigo-950/60 border border-indigo-800/40 text-[11px] font-mono text-slate-300">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+      </div>
+    </section>
+  );
+};
+
