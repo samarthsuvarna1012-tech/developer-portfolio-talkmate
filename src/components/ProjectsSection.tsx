@@ -25,7 +25,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onNavigate }) 
   });
 
   return (
-    <section id="projects" className="py-20 bg-[#030712] border-t border-slate-900/80 relative z-10">
+    <section id="projects" className="section-anchor py-20 bg-[#030712] border-t border-slate-900/80 relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
@@ -43,8 +43,60 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onNavigate }) 
           </p>
         </div>
 
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-40px' }}
+          transition={{ duration: 0.4 }}
+          className="rounded-[1.4rem] border border-indigo-500/30 bg-gradient-to-br from-indigo-950/70 via-slate-900/90 to-slate-950 p-6 sm:p-8 mb-10 shadow-[0_24px_70px_rgba(2,6,23,0.35)]"
+        >
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+            <div className="max-w-2xl">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-[11px] font-semibold uppercase tracking-[0.24em] mb-4">
+                <Sparkles className="w-3.5 h-3.5" />
+                Featured project
+              </div>
+              <h4 className="text-2xl sm:text-3xl font-bold text-slate-100 mb-3">TalkMate AI</h4>
+              <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
+                A personal project exploring how a React interface, Vercel serverless functions, and Gemini-powered streaming can feel like a real conversational assistant rather than a static demo.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <a href="/talkmate" className="px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-cyan-500 text-white text-sm font-semibold">Open live demo</a>
+              <a href="https://github.com/samarthsuvarna1012-tech/developer-portfolio-talkmate" target="_blank" rel="noreferrer" className="px-4 py-2 rounded-xl border border-slate-700 text-slate-200 text-sm font-semibold hover:border-cyan-500/60">View GitHub</a>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+            <div className="rounded-2xl border border-slate-800/80 bg-slate-950/70 p-4">
+              <p className="text-xs uppercase tracking-[0.28em] text-slate-500 mb-2">Highlights</p>
+              <ul className="text-sm text-slate-300 space-y-2">
+                <li>• Streaming chat responses</li>
+                <li>• Multiple AI personas</li>
+                <li>• Voice interaction and file upload</li>
+              </ul>
+            </div>
+            <div className="rounded-2xl border border-slate-800/80 bg-slate-950/70 p-4">
+              <p className="text-xs uppercase tracking-[0.28em] text-slate-500 mb-2">Stack</p>
+              <ul className="text-sm text-slate-300 space-y-2">
+                <li>• React and TypeScript</li>
+                <li>• Serverless API with SSE</li>
+                <li>• Gemini API integration</li>
+              </ul>
+            </div>
+            <div className="rounded-2xl border border-slate-800/80 bg-slate-950/70 p-4">
+              <p className="text-xs uppercase tracking-[0.28em] text-slate-500 mb-2">What I learned</p>
+              <ul className="text-sm text-slate-300 space-y-2">
+                <li>• Async UI state and streaming</li>
+                <li>• Secure server-side AI calls</li>
+                <li>• Accessible conversational UX</li>
+              </ul>
+            </div>
+          </div>
+        </motion.div>
+
         {/* Filters and Search Bar */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-10 pb-6 border-b border-slate-900">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-10 pb-6 border-b border-slate-900/80">
           {/* Category Tabs */}
           <div className="flex items-center gap-2 overflow-x-auto w-full sm:w-auto pb-2 sm:pb-0">
             {categories.map((cat) => (
@@ -79,8 +131,11 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onNavigate }) 
         {/* Projects Grid */}
         {filteredProjects.length === 0 ? (
           <div className="text-center py-16 bg-slate-950/50 rounded-2xl border border-slate-800/80">
-            <Code2 className="w-10 h-10 text-slate-600 mx-auto mb-3" />
-            <p className="text-slate-400 text-sm">No projects match your search criteria.</p>
+            <div className="w-12 h-12 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center mx-auto mb-4">
+              <Code2 className="w-6 h-6 text-cyan-400" />
+            </div>
+            <p className="text-slate-200 text-sm font-semibold">No projects match your current filters.</p>
+            <p className="text-slate-400 text-sm mt-2">Try a broader search or switch to a different category.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -94,10 +149,10 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onNavigate }) 
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-50px' }}
                   transition={{ duration: 0.4, delay: idx * 0.1 }}
-                  className={`relative rounded-2xl p-6 sm:p-8 flex flex-col justify-between transition-all duration-300 ${
+                  className={`relative rounded-[1.35rem] p-6 sm:p-8 flex flex-col justify-between transition-all duration-300 ${
                     isTalkMate
-                      ? 'bg-gradient-to-b from-indigo-950/60 via-slate-900/80 to-slate-950 border-2 border-indigo-500/50 shadow-2xl shadow-indigo-950/60 ring-1 ring-cyan-500/30'
-                      : 'bg-slate-900/60 backdrop-blur-md border border-slate-800/80 hover:border-slate-700 hover:bg-slate-900/90 hover:shadow-xl'
+                      ? 'bg-gradient-to-b from-indigo-950/60 via-slate-900/80 to-slate-950 border-2 border-indigo-500/50 shadow-[0_24px_70px_rgba(2,6,23,0.42)] ring-1 ring-cyan-500/30'
+                      : 'bg-slate-900/60 backdrop-blur-md border border-slate-800/80 hover:border-slate-700 hover:bg-slate-900/90 hover:shadow-[0_20px_50px_rgba(2,6,23,0.28)]'
                   }`}
                 >
                   {/* Featured Badge for TalkMate AI */}
@@ -158,16 +213,16 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onNavigate }) 
                         className="w-full py-3.5 px-5 rounded-xl bg-gradient-to-r from-indigo-600 via-blue-600 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white font-bold text-sm shadow-lg shadow-indigo-600/30 transition-all flex items-center justify-center gap-2 group ring-1 ring-cyan-400/30"
                       >
                         <Bot className="w-5 h-5 text-cyan-200" />
-                        <span>Launch TalkMate AI Page (/talkmate)</span>
+                        <span>Launch TalkMate AI Page</span>
                         <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
                       </button>
                     ) : (
                       <div className="flex items-center gap-3">
                         <button
-                          onClick={() => alert(`This project demo is documented in Samarth's portfolio. Check out /talkmate for the live interactive AI Assistant!`)}
+                          onClick={() => onNavigate('/projects')}
                           className="flex-1 py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs border border-slate-700 transition-colors flex items-center justify-center gap-2"
                         >
-                          <span>View Project Details</span>
+                          <span>View Overview</span>
                           <ExternalLink className="w-3.5 h-3.5" />
                         </button>
                         {project.githubUrl && (
@@ -194,4 +249,3 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onNavigate }) 
     </section>
   );
 };
-

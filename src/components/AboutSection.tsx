@@ -7,8 +7,8 @@ export const AboutSection: React.FC = () => {
   const skills = [
     { name: 'TypeScript / JavaScript', category: 'Languages', level: 'Expert', icon: Code2 },
     { name: 'React 19 & Next.js', category: 'Frontend', level: 'Expert', icon: Layers },
-    { name: 'Node.js & Express', category: 'Backend', level: 'Advanced', icon: Server },
-    { name: 'Gemini AI & LLMs', category: 'AI Integration', level: 'Advanced', icon: Cpu },
+    { name: 'Node.js & Vercel Functions', category: 'Backend', level: 'Advanced', icon: Server },
+    { name: 'AI Assistant & LLMs', category: 'AI Integration', level: 'Advanced', icon: Cpu },
     { name: 'Tailwind CSS & Motion', category: 'Styling', level: 'Expert', icon: Sparkles },
     { name: 'REST & WebSockets', category: 'Networking', level: 'Advanced', icon: Globe },
     { name: 'Cloud & Docker', category: 'DevOps', level: 'Proficient', icon: Terminal },
@@ -16,7 +16,7 @@ export const AboutSection: React.FC = () => {
   ];
 
   return (
-    <section id="about" className="py-20 bg-slate-900/50 border-t border-slate-800/60 relative z-10">
+    <section id="about" className="section-anchor py-20 bg-slate-900/50 border-t border-slate-800/60 relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -27,10 +27,10 @@ export const AboutSection: React.FC = () => {
         >
           <h2 className="text-xs uppercase font-mono font-bold tracking-widest text-cyan-400">About Me</h2>
           <h3 className="text-3xl sm:text-4xl font-extrabold text-slate-100">
-            Passionate About Building Intuitive, Performant Software
+            A student developer building practical web apps and AI experiences
           </h3>
           <p className="text-slate-400 text-base leading-relaxed">
-            I am a full-stack engineer who loves bridging complex backend algorithms with sleek, responsive web frontends. From building modern web interfaces to embedding Gemini AI assistants, I focus on clean code and robust architecture.
+            I’m learning by building. My work centers on React, TypeScript, Vercel Functions, and AI integrations, with a focus on clear interfaces, thoughtful architecture, and projects that explain what I learned along the way.
           </p>
         </motion.div>
 
@@ -38,9 +38,9 @@ export const AboutSection: React.FC = () => {
         <div className="mb-20">
           <h4 className="text-xl font-bold text-slate-200 mb-6 flex items-center gap-2">
             <Cpu className="w-5 h-5 text-cyan-400" />
-            <span>Technical Skills Matrix</span>
+            <span>What I’ve Been Building</span>
           </h4>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
             {skills.map((skill, idx) => {
               const Icon = skill.icon;
               return (
@@ -50,7 +50,7 @@ export const AboutSection: React.FC = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.35, delay: idx * 0.05 }}
-                  className="p-5 rounded-2xl bg-slate-950/70 border border-slate-800 hover:border-slate-700 transition-all hover:-translate-y-1 group backdrop-blur-md shadow-lg"
+                  className="p-5 rounded-2xl bg-slate-950/70 border border-slate-800 hover:border-slate-700 transition-all hover:-translate-y-1 group backdrop-blur-md shadow-[0_18px_45px_rgba(2,6,23,0.28)]"
                 >
                   <div className="w-10 h-10 rounded-xl bg-indigo-950/60 border border-indigo-800/40 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                     <Icon className="w-5 h-5 text-indigo-400 group-hover:text-cyan-300 transition-colors" />
@@ -70,7 +70,7 @@ export const AboutSection: React.FC = () => {
         <div>
           <h4 className="text-xl font-bold text-slate-200 mb-8 flex items-center gap-2">
             <Briefcase className="w-5 h-5 text-indigo-400" />
-            <span>Work & Engineering Timeline</span>
+            <span>Learning Timeline</span>
           </h4>
 
           <div className="relative border-l-2 border-slate-800 ml-4 pl-6 sm:pl-8 space-y-10">
@@ -88,7 +88,7 @@ export const AboutSection: React.FC = () => {
                   <div className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
                 </div>
 
-                <div className="p-6 rounded-2xl bg-slate-950/80 border border-slate-800/80 backdrop-blur-md shadow-xl hover:border-slate-700 transition-all">
+                <div className="p-6 rounded-2xl bg-slate-950/80 border border-slate-800/80 backdrop-blur-md shadow-[0_24px_60px_rgba(2,6,23,0.32)] hover:border-slate-700 transition-all">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
                     <div>
                       <h5 className="text-lg font-bold text-slate-100">{exp.role}</h5>
@@ -128,4 +128,3 @@ export const AboutSection: React.FC = () => {
     </section>
   );
 };
-

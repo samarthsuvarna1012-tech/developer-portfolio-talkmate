@@ -25,11 +25,11 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <span className="font-bold text-slate-100 text-lg">Samarth Suvarna</span>
           </div>
           <p className="text-sm text-slate-400 max-w-md leading-relaxed">
-            Full-Stack Software Engineer specializing in modern React applications, scalable cloud microservices, and AI-powered interfaces like TalkMate AI.
+            Computer science student building React, TypeScript, Vercel Functions, and AI-powered projects while learning by shipping practical web experiences.
           </p>
           <div className="flex items-center gap-3 pt-2">
             <a
-              href="https://github.com"
+              href="https://github.com/samarthsuvarna1012-tech"
               target="_blank"
               rel="noreferrer"
               className="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700 transition-colors"
@@ -38,22 +38,13 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               <Github className="w-4 h-4" />
             </a>
             <a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/in/samarth-suvarna-09b1001b7/"
               target="_blank"
               rel="noreferrer"
               className="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700 transition-colors"
               aria-label="LinkedIn"
             >
               <Linkedin className="w-4 h-4" />
-            </a>
-            <a
-              href="https://twitter.com"
-              target="_blank"
-              rel="noreferrer"
-              className="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700 transition-colors"
-              aria-label="Twitter"
-            >
-              <Twitter className="w-4 h-4" />
             </a>
           </div>
         </div>
@@ -94,7 +85,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               <span>TalkMate AI Page</span>
             </div>
             <p className="text-xs text-slate-400">
-              Interactive AI assistant built with Gemini 3.6 Flash & Server-Sent Events.
+              Interactive AI assistant with streaming responses and real-time updates.
             </p>
             <button
               onClick={() => onNavigate('/talkmate')}
@@ -111,7 +102,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         <p>© {new Date().getFullYear()} Samarth Suvarna. All rights reserved.</p>
         <div className="flex items-center gap-4">
           <span className="flex items-center gap-1">
-            Built with React & Gemini 3.6 Flash
+            Built with React & intelligent AI streaming
           </span>
           <button
             onClick={scrollToTop}

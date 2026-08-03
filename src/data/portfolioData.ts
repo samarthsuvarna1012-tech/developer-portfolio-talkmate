@@ -4,81 +4,65 @@ export const AI_PERSONAS: AIPersona[] = [
   {
     id: 'tech-mentor',
     name: 'Tech Mentor',
-    title: 'Senior Software Architect',
-    description: 'Provides in-depth technical explanations, system design guidance, and best practices.',
+    title: 'Student Developer & AI Mentor',
+    description: 'Explains web development concepts, architecture choices, and practical implementation tips in a beginner-friendly way.',
     iconName: 'Code2',
-    badge: 'Architecture & Engineering',
+    badge: 'Architecture & Learning',
     color: 'from-blue-500 to-indigo-600',
-    systemPrompt: `You are TalkMate AI acting as a Senior Software Architect and Tech Mentor.
-Your goal is to explain complex technical concepts cleanly, provide idiomatic code examples in TypeScript/Python/React, discuss system architecture trade-offs, and recommend production-grade engineering patterns.
-Keep explanations clear, structured, and practical.`,
   },
   {
     id: 'code-reviewer',
     name: 'Code Reviewer',
-    title: 'Precise Code Auditor',
-    description: 'Reviews code snippets for performance, security vulnerabilities, edge cases, and cleanliness.',
+    title: 'Code Review Partner',
+    description: 'Reviews snippets for clarity, robustness, and common issues while keeping feedback constructive.',
     iconName: 'CheckSquare',
-    badge: 'Code Quality & Security',
+    badge: 'Code Quality',
     color: 'from-emerald-500 to-teal-600',
-    systemPrompt: `You are TalkMate AI acting as an expert Code Reviewer and Security Auditor.
-Focus on identifying potential bugs, performance bottlenecks, edge cases, and security vulnerabilities in provided code snippets.
-Format feedback using clear bullet points with concise fixed code examples.`,
   },
   {
     id: 'career-mentor',
     name: 'Career Mentor',
-    title: 'Tech Career & Leadership Coach',
-    description: 'Offers guidance on technical interviews, resume structuring, engineering growth, and leadership.',
+    title: 'Learning Coach',
+    description: 'Offers guidance on building projects, learning in public, and growing as a developer through hands-on work.',
     iconName: 'Briefcase',
-    badge: 'Career & Growth',
+    badge: 'Growth & Learning',
     color: 'from-cyan-500 to-blue-600',
-    systemPrompt: `You are TalkMate AI acting as a Tech Career Coach and Senior Engineering Lead.
-Help users prepare for system design and behavioral interviews, optimize technical resumes, map out career growth paths, and build high-impact portfolios.`,
   },
   {
     id: 'tech-interviewer',
     name: 'Technical Interviewer',
-    title: 'Mock Interview Simulator',
-    description: 'Conducts interactive coding, algorithm, and system design mock interviews with detailed feedback.',
+    title: 'Practice Interviewer',
+    description: 'Runs mock questions about web development, APIs, debugging, and frontend fundamentals.',
     iconName: 'Cpu',
     badge: 'Interview Prep',
     color: 'from-violet-500 to-purple-600',
-    systemPrompt: `You are TalkMate AI acting as a Technical Interviewer for senior software roles.
-Ask rigorous interview questions (algorithms, React state management, distributed systems, REST/GraphQL design), evaluate candidate answers constructively, and provide detailed rubrics.`,
   },
   {
     id: 'ui-designer',
     name: 'UI/UX Architect',
-    title: 'Design Systems & UX Specialist',
-    description: 'Advises on modern visual design, accessibility, micro-interactions, Tailwind styling, and layout math.',
+    title: 'Design Partner',
+    description: 'Advises on accessible layouts, simple visual polish, and thoughtful interface decisions for student projects.',
     iconName: 'Layers',
     badge: 'Design & UX',
     color: 'from-pink-500 to-rose-600',
-    systemPrompt: `You are TalkMate AI acting as a Senior UI/UX Architect and Design System Lead.
-Focus on accessibility (WCAG AA), responsive design math, typographic hierarchy, glassmorphism aesthetics, Tailwind CSS utilities, and micro-interaction patterns.`,
   },
   {
     id: 'ai-researcher',
     name: 'AI Researcher',
-    title: 'LLM & Multimodal AI Specialist',
-    description: 'Explains frontier AI models, prompt engineering strategies, RAG pipelines, and agentic workflows.',
+    title: 'AI Explorer',
+    description: 'Explains prompt ideas, streaming AI interactions, multimodal features, and beginner-friendly AI concepts.',
     iconName: 'Sparkles',
     badge: 'AI & Machine Learning',
     color: 'from-amber-500 to-orange-600',
-    systemPrompt: `You are TalkMate AI acting as a Lead AI Researcher and LLM Applications Engineer.
-Explain state-of-the-art AI architectures, function calling, vector database embeddings, Retrieval-Augmented Generation (RAG), and fine-tuning strategies.`,
   },
   {
     id: 'friendly-companion',
     name: 'Friendly Assistant',
-    title: 'Conversational Companion',
-    description: 'Engaging, cheerful, and versatile for everyday queries, learning, and productivity.',
+    title: 'Study Companion',
+    description: 'Cheerful and flexible for everyday questions, learning support, and project discussions.',
     iconName: 'Sparkles',
     badge: 'General & Learning',
     color: 'from-purple-500 to-pink-600',
-    systemPrompt: `You are TalkMate AI, a friendly, empathetic, and knowledgeable AI assistant.
-Respond warmly, explain ideas simply, and encourage interactive learning and curiosity. Use clear formatting and bullet points where helpful.`,
   }
 ];
 
@@ -94,28 +78,28 @@ export const PROMPT_TEMPLATES: PromptTemplate[] = [
     id: 'p2',
     category: 'Architecture',
     title: 'System Design Diagram',
-    prompt: 'Explain the high-level system architecture for a high-concurrency real-time notification engine using WebSockets and message queues.',
+    prompt: 'Explain the high-level architecture for a simple chat app that uses a React client, a serverless backend, and a streaming AI response.',
     icon: 'Server'
   },
   {
     id: 'p3',
     category: 'Portfolio',
     title: 'Explain TalkMate AI',
-    prompt: 'Explain how TalkMate AI was constructed as part of this developer portfolio, including its server-side Gemini 3.6 Flash integration and React architecture.',
+    prompt: 'Explain how TalkMate AI was built into this portfolio, including the React frontend, server-side AI integration, and the chat experience.',
     icon: 'Bot'
   },
   {
     id: 'p4',
     category: 'Productivity',
     title: 'Code Refactoring Review',
-    prompt: 'Give me 5 essential principles for refactoring legacy React components into modern, functional, highly readable TypeScript code.',
+    prompt: 'Give me 5 practical principles for refactoring React components into cleaner, easier-to-maintain TypeScript code.',
     icon: 'Zap'
   },
   {
     id: 'p5',
     category: 'Learning',
     title: 'AI Engineering Concepts',
-    prompt: 'Explain how Retrieval-Augmented Generation (RAG) and function calling work in modern LLM applications in plain, easy-to-understand terms.',
+    prompt: 'Explain how streaming AI responses and multimodal inputs work in a simple, beginner-friendly way.',
     icon: 'BookOpen'
   }
 ];
@@ -124,90 +108,54 @@ export const PORTFOLIO_PROJECTS: Project[] = [
   {
     id: 'talkmate-ai',
     title: 'TalkMate AI',
-    tagline: 'Intelligent Conversational Voice & Text AI Assistant',
-    description: 'A feature-rich AI conversational workspace embedded into this developer portfolio. Powered by Gemini 3.6 Flash server-side integration, supporting real-time streaming, voice interaction, file analysis, custom AI personas, prompt templates, and chat export.',
+    tagline: 'A voice-friendly AI assistant built into this portfolio',
+    description: 'TalkMate brings together a React chat interface, Vercel serverless functions, and Gemini-powered streaming responses. The project helped me explore secure AI requests, conversational UI, file handling, and accessible interaction design.',
     category: 'AI',
-    tags: ['Gemini 3.6 Flash', 'React 19', 'TypeScript', 'Express', 'Speech Synth'],
+    tags: ['React 19', 'TypeScript', 'Vercel Functions', 'Streaming AI', 'Voice UI'],
     link: '/talkmate',
-    githubUrl: 'https://github.com/example/talkmate-ai',
+    githubUrl: 'https://github.com/samarthsuvarna1012-tech/developer-portfolio-talkmate',
     isFeatured: true,
-    stats: 'Full-Stack • Server-side AI'
+    stats: 'Portfolio Highlight • AI Assistant'
   },
   {
-    id: 'devpulse-dashboard',
-    title: 'DevPulse Dashboard',
-    tagline: 'Developer Velocity & Repository Analytics Engine',
-    description: 'An interactive analytical dashboard visualizing GitHub commit velocity, pull request cycles, code review turnaround times, and automated build metrics.',
+    id: 'developer-portfolio',
+    title: 'Developer Portfolio',
+    tagline: 'A student portfolio site focused on clarity and learning',
+    description: 'This portfolio is a place to share projects, explain engineering choices, and present work in a way that feels honest, practical, and student-focused. It also includes a TalkMate experience and a real contact form handled by serverless functions.',
     category: 'Full-Stack',
-    tags: ['React', 'Tailwind CSS', 'Recharts', 'REST API'],
-    link: '#projects',
-    githubUrl: 'https://github.com/example/devpulse-dashboard',
+    tags: ['React', 'TypeScript', 'Vite', 'Vercel Functions', 'Portfolio UX'],
+    link: '/projects',
+    githubUrl: 'https://github.com/samarthsuvarna1012-tech/developer-portfolio-talkmate',
     isFeatured: false,
-    stats: 'Analytics • Real-time Data'
-  },
-  {
-    id: 'cloudscale-monitor',
-    title: 'CloudScale Infra Monitor',
-    tagline: 'Distributed Infrastructure Health Visualizer',
-    description: 'Real-time telemetry and health monitoring platform for cloud microservices with instant latency heatmaps and automated alert thresholds.',
-    category: 'Cloud',
-    tags: ['TypeScript', 'Express', 'Metrics Engine', 'WebSockets'],
-    link: '#projects',
-    githubUrl: 'https://github.com/example/cloudscale-monitor',
-    isFeatured: false,
-    stats: 'Cloud Ops • Monitoring'
-  },
-  {
-    id: 'neural-vision-studio',
-    title: 'Neural Vision Toolkit',
-    tagline: 'Multimodal AI Prompting & Computer Vision Explorer',
-    description: 'An interactive playground for exploring visual prompt engineering, image classification, object detection overlays, and multimodal prompt testing.',
-    category: 'AI',
-    tags: ['Gemini AI', 'Canvas API', 'TypeScript', 'Tailwind'],
-    link: '#projects',
-    githubUrl: 'https://github.com/example/neural-vision-toolkit',
-    isFeatured: false,
-    stats: 'Multimodal • AI Studio'
+    stats: 'Portfolio • Web Experience'
   }
 ];
 
 export const WORK_EXPERIENCE: ExperienceItem[] = [
   {
     id: 'exp-1',
-    role: 'Senior Full-Stack & AI Engineer',
-    company: 'Apex AI Solutions',
-    period: '2023 — Present',
-    description: 'Architecting scalable web platforms and server-side LLM microservices. Directing frontend design systems and real-time streaming integrations.',
-    technologies: ['React 19', 'TypeScript', 'Node.js', 'Gemini AI', 'Tailwind CSS'],
+    role: 'Computer Science Student',
+    company: 'Independent Projects & Coursework',
+    period: '2024 — Present',
+    description: 'Building portfolio projects and learning through hands-on experimentation with React, TypeScript, Vercel Functions, and AI integrations.',
+    technologies: ['React 19', 'TypeScript', 'Node.js', 'AI APIs', 'Vite'],
     achievements: [
-      'Engineered server-side streaming AI proxies processing 50k+ daily prompts with sub-200ms TTFB.',
-      'Designed high-performance canvas visualizers rendering 60 FPS orbital animations without layout thrashing.',
-      'Mentored junior software developers in functional React, state optimization, and TypeScript safety.'
+      'Built a portfolio site that explains projects, engineering decisions, and learning outcomes clearly.',
+      'Created TalkMate AI to explore streaming AI conversations, voice interaction, and file-aware chat experiences.',
+      'Improved frontend and backend communication by moving API calls to typed serverless functions.'
     ]
   },
   {
     id: 'exp-2',
-    role: 'Full-Stack Software Engineer',
-    company: 'Nexus Digital Systems',
-    period: '2021 — 2023',
-    description: 'Built high-throughput analytical dashboards and cloud telemetry platforms for enterprise client networks.',
-    technologies: ['React', 'Express', 'PostgreSQL', 'Docker', 'Recharts'],
+    role: 'Self-Directed Builder',
+    company: 'Personal Learning Projects',
+    period: '2023 — 2024',
+    description: 'Focused on practical web development skills through small apps, API integration, and iterative UI improvements.',
+    technologies: ['React', 'Vercel Functions', 'Tailwind CSS', 'REST APIs', 'GitHub'],
     achievements: [
-      'Optimized React web applications, reducing client bundle size by 35% and improving lighthouse scores to 98+.',
-      'Implemented real-time WebSocket telemetry engines monitoring thousands of active microservice instances.'
-    ]
-  },
-  {
-    id: 'exp-3',
-    role: 'Frontend Software Developer',
-    company: 'Innovate Labs',
-    period: '2019 — 2021',
-    description: 'Crafted responsive, accessible client-facing interfaces with Tailwind CSS and modern JavaScript.',
-    technologies: ['JavaScript', 'React', 'Tailwind CSS', 'REST APIs', 'Jest'],
-    achievements: [
-      'Developed accessible, component-driven design systems used across 12 product lines.',
-      'Increased user retention by 22% through micro-interaction polishes and fluid layout transitions.'
+      'Learned how to structure a simple full-stack application with a clear separation between frontend and serverless API logic.',
+      'Practiced accessibility, responsive design, and user feedback patterns while improving interface quality.',
+      'Used GitHub and project documentation to communicate progress and decisions clearly.'
     ]
   }
 ];
-

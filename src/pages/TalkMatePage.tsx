@@ -20,15 +20,15 @@ interface TalkMatePageProps {
 const DEFAULT_WELCOME_MSG: Message = {
   id: 'welcome-1',
   role: 'assistant',
-  content: `Hello! I am **TalkMate AI**, the interactive AI assistant integrated into Samarth's developer portfolio.
+  content: `Hello! I’m **TalkMate AI**, your portfolio assistant for Samarth’s work, experience, and projects.
 
-### How I can assist you today:
-- 💻 **Code Architecture & Reviews**: Ask me to write, review, or debug code.
-- 🚀 **Portfolio Insights**: Learn about this app's server-side Gemini 3.6 Flash integration.
-- 🎙️ **Voice Interaction**: Use the microphone button to talk directly.
-- 📁 **File & Code Analysis**: Drag & drop or attach images and code files for instant analysis.
+### What I can help with:
+- 💼 **Portfolio Questions**: Explore projects, experience, and technical background.
+- 💻 **Technical Guidance**: Discuss architecture, code quality, and engineering decisions.
+- 🎙️ **Voice Interaction**: Use the microphone button for hands-free conversation.
+- 📁 **File Insights**: Attach files or images for quick review and discussion.
 
-Tap **Select AI Persona** or **Prompt Starters** above to customize responses or start with a template!`,
+Try a prompt starter or choose a persona above to begin.`,
   timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
 };
 
@@ -74,8 +74,9 @@ export const TalkMatePage: React.FC<TalkMatePageProps> = ({ onNavigate }) => {
   const [attachedFile, setAttachedFile] = useState<{ name: string; mimeType: string; data: string } | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [speakingMessageId, setSpeakingMessageId] = useState<string | null>(null);
-  const [serverStatus, setServerStatus] = useState<{ status: string; hasApiKey: boolean } | null>(null);
+  const [serverStatus, setServerStatus] = useState<{ status: string } | null>(null);
   const [isDraggingFile, setIsDraggingFile] = useState(false);
+  const [notice, setNotice] = useState<{ type: 'info' | 'error' | 'success'; message: string } | null>(null);
 
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -127,6 +128,12 @@ export const TalkMatePage: React.FC<TalkMatePageProps> = ({ onNavigate }) => {
       });
     }
   }, [messages, isLoading]);
+
+  useEffect(() => {
+    if (!notice) return;
+    const timeoutId = window.setTimeout(() => setNotice(null), 3200);
+    return () => window.clearTimeout(timeoutId);
+  }, [notice]);
 
   // Update messages inside active session
   const updateActiveSessionMessages = (newMessages: Message[]) => {
@@ -211,6 +218,13 @@ export const TalkMatePage: React.FC<TalkMatePageProps> = ({ onNavigate }) => {
       recognitionRef.current.onerror = (event: any) => {
         console.error('Speech recognition error:', event.error);
         setIsListening(false);
+        const help: Record<string, string> = {
+          'not-allowed': 'Microphone permission was denied. Enable it in your browser settings to use voice input.',
+          'service-not-allowed': 'Speech recognition is unavailable right now. Please type your message instead.',
+          'no-speech': 'No speech was detected. Please try again.',
+          'audio-capture': 'No microphone was found or it is unavailable.',
+        };
+        showNotice('error', help[event.error] || 'Voice input stopped unexpectedly. Please try again.');
       };
 
       recognitionRef.current.onend = () => {
@@ -219,9 +233,13 @@ export const TalkMatePage: React.FC<TalkMatePageProps> = ({ onNavigate }) => {
     }
   }, []);
 
+  const showNotice = (type: 'info' | 'error' | 'success', message: string) => {
+    setNotice({ type, message });
+  };
+
   const toggleSpeechRecognition = () => {
     if (!recognitionRef.current) {
-      alert('Speech recognition is not supported in your browser.');
+      showNotice('error', 'Speech recognition is not supported in your browser.');
       return;
     }
 
@@ -238,8 +256,14 @@ export const TalkMatePage: React.FC<TalkMatePageProps> = ({ onNavigate }) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    const allowedTypes = ['text/plain', 'text/markdown', 'application/pdf', 'image/jpeg', 'image/png', 'image/webp'];
+    if (!allowedTypes.includes(file.type)) {
+      showNotice('error', 'Choose a TXT, Markdown, PDF, JPG, PNG, or WebP file.');
+      return;
+    }
+
     if (file.size > 5 * 1024 * 1024) {
-      alert('File size exceeds 5MB limit.');
+      showNotice('error', 'File size exceeds the 5MB limit.');
       return;
     }
 
@@ -271,7 +295,7 @@ export const TalkMatePage: React.FC<TalkMatePageProps> = ({ onNavigate }) => {
     const file = e.dataTransfer.files?.[0];
     if (file) {
       if (file.size > 5 * 1024 * 1024) {
-        alert('File size exceeds 5MB limit.');
+        showNotice('error', 'File size exceeds the 5MB limit.');
         return;
       }
       const reader = new FileReader();
@@ -329,8 +353,7 @@ export const TalkMatePage: React.FC<TalkMatePageProps> = ({ onNavigate }) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           messages: historyForApi,
-          persona: selectedPersona.name,
-          systemPrompt: selectedPersona.systemPrompt,
+          personaId: selectedPersona.id,
         }),
       });
 
@@ -484,6 +507,7 @@ export const TalkMatePage: React.FC<TalkMatePageProps> = ({ onNavigate }) => {
   const clearChat = () => {
     if (window.confirm('Clear current conversation history?')) {
       updateActiveSessionMessages([DEFAULT_WELCOME_MSG]);
+      showNotice('success', 'Conversation cleared.');
     }
   };
 
@@ -536,7 +560,7 @@ export const TalkMatePage: React.FC<TalkMatePageProps> = ({ onNavigate }) => {
                 <h1 className="font-extrabold text-slate-100 text-sm sm:text-base leading-none flex items-center gap-1.5 truncate">
                   <span>{activeSession.title}</span>
                   <span className="px-1.5 py-0.5 rounded bg-indigo-500/20 border border-indigo-500/30 text-cyan-300 text-[9px] sm:text-[10px] font-mono font-bold whitespace-nowrap">
-                    Gemini 3.6 Flash
+                    TalkMate AI
                   </span>
                 </h1>
                 <p className="text-[10px] sm:text-xs text-slate-400 mt-0.5 truncate hidden xs:block">Interactive AI Workspace</p>
@@ -547,9 +571,9 @@ export const TalkMatePage: React.FC<TalkMatePageProps> = ({ onNavigate }) => {
           {/* Controls & Server Status */}
           <div className="flex items-center gap-2 shrink-0">
             <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-slate-950 border border-slate-800 text-xs font-mono">
-              <span className={`w-2 h-2 rounded-full shrink-0 ${serverStatus?.hasApiKey ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'}`} />
+              <span className={`w-2 h-2 rounded-full shrink-0 ${serverStatus?.status === 'ok' ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'}`} />
               <span className="text-slate-400 whitespace-nowrap text-[11px] hidden sm:inline">
-                {serverStatus?.hasApiKey ? 'Server Ready' : 'Connecting'}
+                {serverStatus?.status === 'ok' ? 'Server Ready' : 'Connecting'}
               </span>
             </div>
 
@@ -572,6 +596,111 @@ export const TalkMatePage: React.FC<TalkMatePageProps> = ({ onNavigate }) => {
 
         </div>
       </div>
+
+      {notice && (
+        <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 pt-4 relative z-10">
+          <div className={`rounded-xl border px-4 py-3 text-sm flex items-center gap-2 ${notice.type === 'error' ? 'border-red-500/40 bg-red-500/10 text-red-300' : notice.type === 'success' ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-300' : 'border-cyan-500/40 bg-cyan-500/10 text-cyan-300'}`} role="status">
+            <AlertCircle className="w-4 h-4 shrink-0" />
+            <span>{notice.message}</span>
+          </div>
+        </div>
+      )}
+
+      <motion.section
+        initial={{ opacity: 0, y: 18 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+        className="max-w-7xl w-full mx-auto px-4 sm:px-6 pt-6 relative z-10"
+      >
+        <div className="rounded-[1.45rem] border border-slate-800/80 bg-slate-900/70 p-6 sm:p-8 shadow-[0_24px_70px_rgba(2,6,23,0.35)] backdrop-blur-md">
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-7">
+            <div className="max-w-2xl">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-[11px] font-semibold uppercase tracking-[0.24em] mb-4">
+                <Cpu className="w-3.5 h-3.5" />
+                TalkMate architecture
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-bold text-slate-100">A simple, teachable AI workflow built for learning and experimentation</h2>
+              <p className="mt-3 text-sm sm:text-base text-slate-400 leading-relaxed">
+                This project is more than a polished chat demo. It connects a React client, a Vercel serverless API, and Gemini streaming so the experience feels interactive while keeping the AI integration understandable.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-slate-800 bg-slate-950/70 px-4 py-3 text-sm text-slate-300 max-w-sm">
+              <div className="font-semibold text-slate-100 mb-2">What this teaches</div>
+              <ul className="space-y-1.5 text-slate-400">
+                <li>• Streaming UIs with SSE</li>
+                <li>• Server-side AI requests</li>
+                <li>• File handling and validation</li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 xl:grid-cols-[1.1fr_0.9fr] gap-6">
+            <div className="rounded-2xl border border-slate-800/80 bg-slate-950/70 p-5">
+              <div className="flex items-center gap-2 text-cyan-300 text-sm font-semibold mb-4">
+                <Sparkles className="w-4 h-4" />
+                Flow overview
+              </div>
+              <div className="grid gap-3 sm:grid-cols-4 text-center text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">
+                <div className="rounded-xl border border-slate-800 bg-slate-900/80 p-3">React client</div>
+                <div className="rounded-xl border border-slate-800 bg-slate-900/80 p-3">Serverless API</div>
+                <div className="rounded-xl border border-slate-800 bg-slate-900/80 p-3">Gemini API</div>
+                <div className="rounded-xl border border-slate-800 bg-slate-900/80 p-3">Streamed reply</div>
+              </div>
+              <div className="mt-4 rounded-2xl border border-slate-800/70 bg-gradient-to-r from-indigo-950/60 via-slate-900 to-cyan-950/40 p-4 text-sm text-slate-300">
+                <p className="mb-2 text-slate-200 font-semibold">Request path</p>
+                <p className="leading-relaxed">
+                  The React interface sends chat messages and optional files to a Vercel serverless function. The function validates the request, forwards it to Gemini, and streams the response back to the browser as the assistant answers.
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <div className="rounded-2xl border border-slate-800/80 bg-slate-950/70 p-5">
+                <div className="flex items-center gap-2 text-cyan-300 text-sm font-semibold mb-3">
+                  <Activity className="w-4 h-4" />
+                  Why SSE?
+                </div>
+                <p className="text-sm text-slate-400 leading-relaxed">
+                  Server-Sent Events let the app stream tokens incrementally so the chat feels responsive and more like a live conversation than a delayed full-page update.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-slate-800/80 bg-slate-950/70 p-5">
+                <div className="flex items-center gap-2 text-cyan-300 text-sm font-semibold mb-3">
+                  <ShieldCheck className="w-4 h-4" />
+                  Why server-side AI calls?
+                </div>
+                <p className="text-sm text-slate-400 leading-relaxed">
+                  The API key stays on the server, which keeps the browser from exposing credentials and makes the app easier to reason about in a portfolio setting.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-slate-800/80 bg-slate-950/70 p-5">
+                <div className="flex items-center gap-2 text-cyan-300 text-sm font-semibold mb-3">
+                  <UploadCloud className="w-4 h-4" />
+                  File handling
+                </div>
+                <p className="text-sm text-slate-400 leading-relaxed">
+                  Files are accepted up to a modest size limit, validated by MIME type and size, and passed into the AI request with clear error feedback when something is unsupported.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-6 rounded-2xl border border-slate-800/80 bg-slate-950/70 p-5">
+            <div className="flex items-center gap-2 text-cyan-300 text-sm font-semibold mb-3">
+              <BookOpen className="w-4 h-4" />
+              What I learned
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 text-sm text-slate-400">
+              <div className="rounded-xl border border-slate-800 bg-slate-900/70 p-3">Connecting a frontend to LLM APIs</div>
+              <div className="rounded-xl border border-slate-800 bg-slate-900/70 p-3">Designing a streaming conversational UI</div>
+              <div className="rounded-xl border border-slate-800 bg-slate-900/70 p-3">Managing async state and error cases</div>
+              <div className="rounded-xl border border-slate-800 bg-slate-900/70 p-3">Thinking about security and validation</div>
+            </div>
+          </div>
+        </div>
+      </motion.section>
 
       {/* Main Responsive Grid Layout */}
       <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 flex-1 relative z-10">
@@ -775,7 +904,7 @@ export const TalkMatePage: React.FC<TalkMatePageProps> = ({ onNavigate }) => {
                               {isUser ? (
                                 <p className="whitespace-pre-wrap">{msg.content}</p>
                               ) : (
-                                <div className="prose prose-invert prose-sm max-w-none space-y-2">
+                                <div className="prose prose-invert prose-sm max-w-none space-y-2" aria-live={msg.isStreaming ? 'polite' : undefined} aria-atomic="false">
                                   <ReactMarkdown
                                     components={{
                                       code({ node, inline, className, children, ...props }: any) {
@@ -902,7 +1031,7 @@ export const TalkMatePage: React.FC<TalkMatePageProps> = ({ onNavigate }) => {
                     ref={fileInputRef}
                     onChange={handleFileUpload}
                     className="hidden"
-                    accept="image/*,text/*,.pdf,.json,.ts,.js,.py,.txt"
+                    accept="image/jpeg,image/png,image/webp,text/plain,text/markdown,application/pdf,.md,.txt,.pdf"
                   />
                   <button
                     onClick={() => fileInputRef.current?.click()}
@@ -1177,4 +1306,3 @@ export const TalkMatePage: React.FC<TalkMatePageProps> = ({ onNavigate }) => {
     </div>
   );
 };
-

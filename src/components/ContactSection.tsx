@@ -1,23 +1,81 @@
 import React, { useState } from 'react';
-import { Mail, Send, CheckCircle2, MapPin, Github, Linkedin, Twitter } from 'lucide-react';
+import { Mail, Send, CheckCircle2, MapPin, AlertCircle } from 'lucide-react';
 import { motion } from 'motion/react';
 
 export const ContactSection: React.FC = () => {
   const [submitted, setSubmitted] = useState(false);
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [errorMessage, setErrorMessage] = useState('');
+  const [formData, setFormData] = useState({ name: '', email: '', message: '', company: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const validate = () => {
+    const trimmedName = formData.name.trim();
+    const trimmedEmail = formData.email.trim();
+    const trimmedMessage = formData.message.trim();
+
+    if (formData.company.trim()) {
+      setErrorMessage('Your message could not be processed.');
+      return false;
+    }
+
+    if (!trimmedName || !trimmedEmail || !trimmedMessage) {
+      setErrorMessage('Please complete every field before sending your message.');
+      return false;
+    }
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(trimmedEmail)) {
+      setErrorMessage('Please enter a valid email address.');
+      return false;
+    }
+
+    if (trimmedMessage.length < 10) {
+      setErrorMessage('Your message should be at least 10 characters long.');
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name || !formData.email || !formData.message) return;
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({ name: '', email: '', message: '' });
-    }, 4000);
+    if (!validate()) return;
+
+    setErrorMessage('');
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          message: formData.message.trim(),
+        }),
+      });
+
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(result.error || 'The message could not be sent. Please try again later.');
+
+      setSubmitted(true);
+      setFormData({ name: '', email: '', message: '', company: '' });
+    } catch (error) {
+      setErrorMessage(error instanceof Error ? error.message : 'The message could not be sent.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleFieldChange = (field: keyof typeof formData, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+    if (errorMessage) {
+      setErrorMessage('');
+    }
   };
 
   return (
-    <section id="contact" className="py-20 bg-[#030712] border-t border-slate-900/80 relative z-10">
+    <section id="contact" className="section-anchor py-20 bg-[#030712] border-t border-slate-900/80 relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           
@@ -34,7 +92,7 @@ export const ContactSection: React.FC = () => {
               <h3 className="text-3xl font-extrabold text-slate-100">Let's Connect & Collaborate</h3>
             </div>
             <p className="text-slate-400 text-sm leading-relaxed">
-              Have a project in mind, an opportunity to discuss, or questions about my full-stack and AI architecture work? Send a message directly.
+              I’m open to conversations about student projects, portfolio feedback, AI experiments, and collaborative web development ideas. If you’d like to connect, send a message here.
             </p>
 
             <div className="space-y-4 pt-4">
@@ -56,9 +114,16 @@ export const ContactSection: React.FC = () => {
                 </div>
                 <div>
                   <div className="text-xs text-slate-500 font-mono">Location</div>
-                  <div className="text-sm font-semibold text-slate-200">San Francisco Bay Area / Remote</div>
+                  <div className="text-sm font-semibold text-slate-200">Remote • Open to collaboration</div>
                 </div>
               </div>
+
+              <a
+                href="/samarth-resume.pdf"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-cyan-300 hover:text-cyan-200 transition-colors"
+              >
+                <span>Download Resume</span>
+              </a>
             </div>
           </motion.div>
 
@@ -81,6 +146,16 @@ export const ContactSection: React.FC = () => {
             ) : (
               <form onSubmit={handleSubmit} className="space-y-5">
                 <h4 className="text-lg font-bold text-slate-100 mb-4">Send a Direct Message</h4>
+                <input
+                  type="text"
+                  value={formData.company}
+                  onChange={(e) => handleFieldChange('company', e.target.value)}
+                  className="hidden"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                />
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Your Name</label>
@@ -88,7 +163,7 @@ export const ContactSection: React.FC = () => {
                       type="text"
                       required
                       value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      onChange={(e) => handleFieldChange('name', e.target.value)}
                       placeholder="Jane Doe"
                       className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-slate-100 text-sm focus:outline-none focus:border-cyan-500 transition-colors"
                     />
@@ -99,7 +174,7 @@ export const ContactSection: React.FC = () => {
                       type="email"
                       required
                       value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      onChange={(e) => handleFieldChange('email', e.target.value)}
                       placeholder="jane@example.com"
                       className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-slate-100 text-sm focus:outline-none focus:border-cyan-500 transition-colors"
                     />
@@ -112,18 +187,26 @@ export const ContactSection: React.FC = () => {
                     rows={4}
                     required
                     value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    onChange={(e) => handleFieldChange('message', e.target.value)}
                     placeholder="Tell me about your project or query..."
                     className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-slate-100 text-sm focus:outline-none focus:border-cyan-500 transition-colors resize-none"
                   />
                 </div>
 
+                {errorMessage && (
+                  <div className="flex items-start gap-2 rounded-xl border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-sm text-amber-300" role="alert">
+                    <AlertCircle className="w-4 h-4 mt-0.5 shrink-0" />
+                    <span>{errorMessage}</span>
+                  </div>
+                )}
+
                 <button
                   type="submit"
-                  className="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-indigo-600 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white font-bold text-sm transition-all shadow-lg flex items-center justify-center gap-2"
+                  disabled={isSubmitting}
+                  className="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-indigo-600 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white font-bold text-sm transition-all shadow-lg flex items-center justify-center gap-2 disabled:cursor-not-allowed disabled:opacity-70"
                 >
                   <Send className="w-4 h-4" />
-                  <span>Send Message</span>
+                  <span>{isSubmitting ? 'Sending...' : 'Send Message'}</span>
                 </button>
               </form>
             )}

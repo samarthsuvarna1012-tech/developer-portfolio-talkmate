@@ -28,7 +28,6 @@ export interface AIPersona {
   title: string;
   description: string;
   iconName: string;
-  systemPrompt: string;
   badge: string;
   color: string;
 }
@@ -64,4 +63,3 @@ export interface ExperienceItem {
   technologies: string[];
   achievements: string[];
 }
-

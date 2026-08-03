@@ -42,44 +42,46 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath, onNavigate, onOpenG
           : 'bg-slate-950/60 backdrop-blur-md py-4 border-b border-slate-900/50'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3">
         {/* Brand Logo */}
         <button
+          type="button"
           onClick={(e) => handleNavClick('/', e)}
-          className="flex items-center gap-3 group text-left focus:outline-none"
+          className="flex items-center gap-2 sm:gap-3 group text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 rounded-xl min-w-0 max-w-[70%] sm:max-w-none"
         >
           <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-blue-500 to-cyan-400 p-0.5 shadow-md group-hover:scale-105 transition-transform">
             <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
               <Code2 className="w-5 h-5 text-indigo-400 group-hover:text-cyan-300 transition-colors" />
             </div>
           </div>
-          <div>
-            <div className="font-bold text-slate-100 text-lg leading-none tracking-tight flex items-center gap-1.5">
+          <div className="min-w-0">
+            <div className="font-bold text-slate-100 text-base sm:text-lg leading-none tracking-tight flex items-center gap-1.5 truncate">
               Samarth Suvarna
             </div>
-            <div className="text-xs text-slate-400 font-mono mt-0.5">
+            <div className="text-[11px] sm:text-xs text-slate-400 font-mono mt-0.5 truncate">
               Full-Stack & AI Systems
             </div>
           </div>
         </button>
 
         {/* Desktop Nav Items with Motion Active Indicator */}
-        <nav className="hidden md:flex items-center gap-1 bg-slate-900/80 p-1.5 rounded-full border border-slate-800/80 backdrop-blur-md relative">
+        <nav className="hidden md:flex items-center gap-1.5 bg-slate-900/80 p-1.5 rounded-full border border-slate-800/80 backdrop-blur-md relative">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = currentPath === item.path;
             return (
               <button
                 key={item.label}
+                type="button"
                 onClick={(e) => handleNavClick(item.path, e)}
-                className={`relative px-4 py-2 rounded-full text-sm font-medium transition-colors flex items-center gap-2 z-10 ${
+                className={`relative px-4 py-2.5 rounded-full text-sm font-semibold tracking-wide transition-colors flex items-center gap-2 z-10 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
                   isActive ? 'text-cyan-300' : 'text-slate-300 hover:text-slate-100'
                 }`}
               >
                 {isActive && (
                   <motion.div
                     layoutId="activeNavPill"
-                    className="absolute inset-0 bg-slate-800 border border-indigo-500/40 rounded-full shadow-sm z-[-1]"
+                    className="absolute inset-0 bg-slate-800/90 border border-cyan-400/40 rounded-full shadow-[0_0_0_1px_rgba(34,211,238,0.14)] z-[-1]"
                     transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                   />
                 )}
@@ -93,8 +95,9 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath, onNavigate, onOpenG
         {/* Talk to AI Global Agent Button */}
         <div className="hidden md:flex items-center gap-3">
           <button
+            type="button"
             onClick={onOpenGlobalAgent}
-            className="relative group px-4 py-2 rounded-xl text-sm font-semibold bg-gradient-to-r from-indigo-600 via-blue-600 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white shadow-lg shadow-indigo-600/25 hover:shadow-cyan-500/30 hover:scale-[1.03] transition-all duration-300 flex items-center gap-2 overflow-hidden ring-1 ring-cyan-400/40"
+            className="relative group px-4 py-2.5 rounded-xl text-sm font-semibold bg-gradient-to-r from-indigo-600 via-blue-600 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white shadow-lg shadow-indigo-600/25 hover:shadow-cyan-500/30 hover:scale-[1.03] transition-all duration-300 flex items-center gap-2 overflow-hidden ring-1 ring-cyan-400/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
           >
             <div className="relative">
               <Bot className="w-4 h-4 text-cyan-200 group-hover:rotate-12 transition-transform" />
@@ -109,9 +112,12 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath, onNavigate, onOpenG
 
         {/* Mobile Menu Toggle */}
         <button
+          type="button"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white"
+          className="md:hidden p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
           aria-label="Toggle Navigation Menu"
+          aria-expanded={mobileMenuOpen}
+          aria-controls="mobile-navigation"
         >
           {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
@@ -120,10 +126,11 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath, onNavigate, onOpenG
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
         <motion.div 
+          id="mobile-navigation"
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
-          className="md:hidden bg-slate-900/95 border-b border-slate-800 px-4 py-4 space-y-2 backdrop-blur-xl shadow-2xl"
+          className="md:hidden bg-slate-900/95 border-b border-slate-800 px-4 py-4 space-y-2.5 backdrop-blur-xl shadow-2xl"
         >
           {navItems.map((item) => {
             const Icon = item.icon;
@@ -131,8 +138,10 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath, onNavigate, onOpenG
             return (
               <button
                 key={item.label}
+                type="button"
                 onClick={(e) => handleNavClick(item.path, e)}
-                className={`w-full px-4 py-3 rounded-xl text-left font-medium flex items-center gap-3 transition-colors ${
+                aria-current={isActive ? 'page' : undefined}
+                className={`w-full px-4 py-3 rounded-xl text-left font-semibold text-sm flex items-center gap-3 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
                   isActive
                     ? 'bg-indigo-600/20 text-cyan-400 border border-indigo-500/30'
                     : 'text-slate-300 hover:bg-slate-800/60'
@@ -145,11 +154,12 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath, onNavigate, onOpenG
           })}
           <div className="pt-2">
             <button
+              type="button"
               onClick={() => {
                 setMobileMenuOpen(false);
                 onOpenGlobalAgent();
               }}
-              className="w-full px-4 py-3 rounded-xl font-semibold bg-gradient-to-r from-indigo-600 via-blue-600 to-cyan-600 text-white flex items-center justify-between shadow-lg"
+              className="w-full px-4 py-3 rounded-xl font-semibold bg-gradient-to-r from-indigo-600 via-blue-600 to-cyan-600 text-white flex items-center justify-between shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
             >
               <div className="flex items-center gap-2">
                 <Bot className="w-5 h-5 text-cyan-200" />

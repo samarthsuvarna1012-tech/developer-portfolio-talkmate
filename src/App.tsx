@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Suspense, lazy } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { RoutePath } from './types';
 import { Navbar } from './components/Navbar';
@@ -7,8 +7,9 @@ import { HomeSection } from './components/HomeSection';
 import { AboutSection } from './components/AboutSection';
 import { ProjectsSection } from './components/ProjectsSection';
 import { ContactSection } from './components/ContactSection';
-import { TalkMatePage } from './pages/TalkMatePage';
-import { GlobalAIVoiceWidget } from './components/GlobalAIVoiceWidget';
+
+const TalkMatePage = lazy(() => import('./pages/TalkMatePage').then((module) => ({ default: module.TalkMatePage })));
+const GlobalAIVoiceWidget = lazy(() => import('./components/GlobalAIVoiceWidget').then((module) => ({ default: module.GlobalAIVoiceWidget })));
 
 export default function App() {
   const [isVoiceAgentActive, setIsVoiceAgentActive] = useState(false);
@@ -115,13 +116,19 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#030712] text-slate-100 flex flex-col selection:bg-cyan-500 selection:text-slate-950 font-sans">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-cyan-500 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-slate-950 focus:outline-none focus:ring-2 focus:ring-cyan-300"
+      >
+        Skip to main content
+      </a>
       <Navbar 
         currentPath={currentPath} 
         onNavigate={navigateTo} 
         onOpenGlobalAgent={() => setIsVoiceAgentActive(!isVoiceAgentActive)} 
       />
 
-      <main className="flex-1">
+      <main id="main-content" className="flex-1">
         <AnimatePresence mode="wait">
           {currentPath === '/talkmate' ? (
             <motion.div
@@ -131,7 +138,9 @@ export default function App() {
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.3 }}
             >
-              <TalkMatePage onNavigate={navigateTo} />
+              <Suspense fallback={null}>
+                <TalkMatePage onNavigate={navigateTo} />
+              </Suspense>
             </motion.div>
           ) : (
             <motion.div
@@ -155,10 +164,12 @@ export default function App() {
 
       <Footer onNavigate={navigateTo} />
 
-      <GlobalAIVoiceWidget 
-        isActive={isVoiceAgentActive} 
-        onToggle={() => setIsVoiceAgentActive(!isVoiceAgentActive)} 
-      />
+      <Suspense fallback={null}>
+        <GlobalAIVoiceWidget 
+          isActive={isVoiceAgentActive} 
+          onToggle={() => setIsVoiceAgentActive(!isVoiceAgentActive)} 
+        />
+      </Suspense>
     </div>
   );
 }

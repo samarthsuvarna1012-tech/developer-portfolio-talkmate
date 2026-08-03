@@ -161,11 +161,7 @@ export const GlobalAIVoiceWidget: React.FC<GlobalAIVoiceWidgetProps> = ({ isActi
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           messages: [{ role: 'user', content: queryText }],
-          persona: 'Global Voice Assistant',
-          systemPrompt: `You are the global voice assistant for Samarth Suvarna's developer portfolio.
-Keep your answer concise (2 to 4 clear sentences max) so it sounds natural when spoken aloud.
-Answer questions directly about Samarth's skills, projects, background, contact info, or full-stack engineering work.`,
-          temperature: 0.7,
+          personaId: 'friendly-companion',
         }),
       });
 
@@ -288,7 +284,7 @@ Answer questions directly about Samarth's skills, projects, background, contact 
           {status === 'thinking' && (
             <div className="flex items-center gap-2 text-indigo-300 font-mono">
               <RefreshCw className="w-3.5 h-3.5 animate-spin text-cyan-400" />
-              <span>Consulting Gemini 3.6 Flash...</span>
+              <span>Consulting the AI assistant...</span>
             </div>
           )}
 
