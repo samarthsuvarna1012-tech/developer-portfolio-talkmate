@@ -9,3 +9,5 @@ coverage/
 .env.local
 .env
 *.zip
+.vercel
+.env*

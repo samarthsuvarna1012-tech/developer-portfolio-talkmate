@@ -1,5 +1,5 @@
 import { GoogleGenAI, type Content } from "@google/genai";
-import { getClientIp, isRateLimited, methodNotAllowed, type ApiRequest, type ApiResponse } from "./_shared";
+import { getClientIp, isRateLimited, methodNotAllowed, type ApiRequest, type ApiResponse } from "./_shared.js";
 
 const WINDOW_MS = 10 * 60 * 1000;
 const MAX_REQUESTS = 20;
@@ -59,7 +59,7 @@ export default async function handler(request: ApiRequest, response: ApiResponse
   if (isRateLimited(requestHistory, getClientIp(request), WINDOW_MS, MAX_REQUESTS)) { response.status(429).json({ error: "Too many chat requests. Please wait a few minutes and try again." }); return; }
   try {
     const stream = await getGeminiClient().models.generateContentStream({
-      model: "gemini-2.5-flash",
+      model: "gemini-3.5-flash",
       contents: toGeminiContents(messages),
       config: { systemInstruction: `${PERSONA_PROMPTS[personaId]}\nAlways provide helpful, well-structured Markdown responses. TalkMate is a personal AI project, so acknowledge that responses may occasionally be inaccurate when relevant.`, temperature: 0.7 },
     });
