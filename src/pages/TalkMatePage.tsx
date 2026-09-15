@@ -534,12 +534,12 @@ export const TalkMatePage: React.FC<TalkMatePageProps> = ({ onNavigate }) => {
   );
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(34,211,238,0.14),transparent_30%),radial-gradient(circle_at_bottom_right,_rgba(99,102,241,0.12),transparent_32%),rgba(7,21,34,0.38)] text-slate-100 pt-20 pb-12 flex flex-col justify-between relative overflow-hidden">
+    <div className="genos-shell min-h-screen bg-[radial-gradient(circle_at_top,_rgba(34,211,238,0.14),transparent_30%),radial-gradient(circle_at_bottom_right,_rgba(99,102,241,0.12),transparent_32%),rgba(7,21,34,0.38)] text-slate-100 pt-20 pb-12 flex flex-col justify-between relative overflow-hidden">
       {/* Dynamic Background */}
       <FuturisticBackground />
 
       {/* Top Header & Navigation Bar */}
-      <div className="bg-slate-900/25 border-b border-slate-700/50 px-4 sm:px-6 py-3.5 sticky top-16 z-30 backdrop-blur-md shadow-[0_10px_30px_rgba(15,23,42,0.18)]">
+      <div className="genos-topbar bg-slate-900/25 border-b border-slate-700/50 px-4 sm:px-6 py-3.5 sticky top-16 z-30 backdrop-blur-md shadow-[0_10px_30px_rgba(15,23,42,0.18)]">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
           
           <div className="flex items-center gap-3 min-w-0">
@@ -613,12 +613,12 @@ export const TalkMatePage: React.FC<TalkMatePageProps> = ({ onNavigate }) => {
 
 
       {/* Main Responsive Grid Layout */}
-      <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 flex-1 relative z-10">
+      <div className="genos-workspace max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 flex-1 relative z-10">
         
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* Left Column: Centered AI Orb Showcase & Waveform Visualizer */}
-          <div className="lg:col-span-5 flex flex-col items-center justify-center p-6 bg-slate-900/18 border border-slate-700/45 rounded-2xl backdrop-blur-md shadow-2xl space-y-5 lg:sticky lg:top-28 relative overflow-hidden group">
+          <div className="genos-core-panel lg:col-span-5 flex flex-col items-center justify-center p-6 bg-slate-900/18 border border-slate-700/45 rounded-2xl backdrop-blur-md shadow-2xl space-y-5 lg:sticky lg:top-28 relative overflow-hidden group">
             
             {/* Centered Spotlight Behind Orb */}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,229,255,0.12)_0%,rgba(124,77,255,0.06)_45%,transparent_70%)] pointer-events-none transition-opacity duration-700" />
@@ -665,10 +665,10 @@ export const TalkMatePage: React.FC<TalkMatePageProps> = ({ onNavigate }) => {
           </div>
 
           {/* Right Column: Prompt Controls & Chat Workspace */}
-          <div className="lg:col-span-7 flex flex-col space-y-4 min-h-0">
+          <div className="genos-chat-column lg:col-span-7 flex flex-col space-y-4 min-h-0">
             
             {/* Persona Switcher & Prompt Starters */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 bg-slate-900/20 border border-slate-700/45 rounded-2xl shadow-lg shrink-0 backdrop-blur-sm">
+            <div className="genos-controlbar flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 bg-slate-900/20 border border-slate-700/45 rounded-2xl shadow-lg shrink-0 backdrop-blur-sm">
               <div className="grid grid-cols-1 xs:grid-cols-2 sm:flex sm:flex-wrap items-center gap-2 sm:gap-2.5 w-full sm:w-auto">
                 <button
                   onClick={() => setActiveModal('persona')}
@@ -722,7 +722,7 @@ export const TalkMatePage: React.FC<TalkMatePageProps> = ({ onNavigate }) => {
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
               onDrop={handleDrop}
-              className={`flex flex-col h-[520px] sm:h-[600px] bg-slate-900/20 rounded-2xl border border-slate-700/45 transition-colors overflow-hidden shadow-2xl relative flex-1 backdrop-blur-sm ${
+              className={`genos-chat-panel flex flex-col h-[520px] sm:h-[600px] bg-slate-900/20 rounded-2xl border border-slate-700/45 transition-colors overflow-hidden shadow-2xl relative flex-1 backdrop-blur-sm ${
                 isDraggingFile ? 'border-cyan-400 bg-indigo-950/40 ring-2 ring-cyan-400/50' : 'border-slate-800'
               }`}
             >
@@ -1000,7 +1000,7 @@ export const TalkMatePage: React.FC<TalkMatePageProps> = ({ onNavigate }) => {
         initial={{ opacity: 0, y: 18 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
-        className="max-w-7xl w-full mx-auto px-4 sm:px-6 pt-6 relative z-10"
+        className="genos-architecture max-w-7xl w-full mx-auto px-4 sm:px-6 pt-6 relative z-10"
       >
         <div className="rounded-[1.45rem] border border-slate-700/80 bg-slate-900/45 p-6 sm:p-8 shadow-[0_24px_70px_rgba(2,6,23,0.38)] backdrop-blur-md">
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-7">
