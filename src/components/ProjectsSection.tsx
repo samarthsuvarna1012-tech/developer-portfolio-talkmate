@@ -234,7 +234,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onNavigate }) 
                               rel="noreferrer"
                               className="flex-1 py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs border border-slate-700 transition-colors flex items-center justify-center gap-2"
                             >
-                              <span>View Overview</span>
+                              <span>Live Demo</span>
                               <ExternalLink className="w-3.5 h-3.5" />
                             </a>
                           ) : (
