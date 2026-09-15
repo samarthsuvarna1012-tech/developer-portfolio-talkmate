@@ -11,3 +11,6 @@ coverage/
 *.zip
 .vercel
 .env*
+
+# Generated forensic reports
+CODEX_FORENSIC_AUDIT.md
