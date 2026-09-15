@@ -112,12 +112,12 @@ export const PORTFOLIO_PROJECTS: Project[] = [
     description: 'An AI operating system and intelligent software system built around modular AI capabilities, system orchestration, learning, execution, and platform intelligence. The project is under active development, with module readiness varying across the system.',
     category: 'DevTools',
     tags: ['React', 'TypeScript', 'Node.js', 'Modular Architecture', 'AI Systems'],
-    link: 'https://genos-ai.vercel.app/',
+    link: 'https://genos-ai-silk.vercel.app/',
     githubUrl: 'https://github.com/samarthsuvarna1012-tech/genos-ai',
     isFeatured: true,
     stats: 'Flagship Project • Active Development',
     status: 'development',
-    deployment: { provider: 'vercel', url: 'https://genos-ai.vercel.app/' }
+    deployment: { provider: 'vercel', url: 'https://genos-ai-silk.vercel.app/' }
   },
   {
     id: 'codemaker',
