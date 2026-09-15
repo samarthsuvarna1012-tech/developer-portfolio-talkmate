@@ -75,7 +75,7 @@ export const ContactSection: React.FC = () => {
   };
 
   return (
-    <section id="contact" className="section-anchor py-20 bg-[#030712] border-t border-slate-900/80 relative z-10">
+    <section id="contact" className="section-anchor py-20 bg-[rgba(4,8,22,0.45)] border-t border-[var(--border-subtle)] relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           
@@ -88,10 +88,10 @@ export const ContactSection: React.FC = () => {
             className="lg:col-span-5 space-y-6"
           >
             <div>
-              <h2 className="text-xs uppercase font-mono font-bold tracking-widest text-cyan-400 mb-2">Get In Touch</h2>
-              <h3 className="text-3xl font-extrabold text-slate-100">Let's Connect & Collaborate</h3>
+              <h2 className="text-xs uppercase font-mono font-bold tracking-widest text-[var(--accent)] mb-2">Get In Touch</h2>
+              <h3 className="text-3xl font-extrabold text-[var(--text-primary)]">Let's Connect & Collaborate</h3>
             </div>
-            <p className="text-slate-400 text-sm leading-relaxed">
+            <p className="text-[var(--text-muted)] text-sm leading-relaxed">
               I’m open to conversations about student projects, portfolio feedback, AI experiments, and collaborative web development ideas. If you’d like to connect, send a message here.
             </p>
 
@@ -101,8 +101,8 @@ export const ContactSection: React.FC = () => {
                   <Mail className="w-5 h-5" />
                 </div>
                 <div>
-                  <div className="text-xs text-slate-500 font-mono">Email</div>
-                  <a href="mailto:samarthsuvarna1012@gmail.com" className="text-sm font-semibold text-slate-200 hover:text-cyan-400 transition-colors">
+                  <div className="text-xs text-[var(--text-muted)] font-mono">Email</div>
+                  <a href="mailto:samarthsuvarna1012@gmail.com" className="text-sm font-semibold text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors">
                     samarthsuvarna1012@gmail.com
                   </a>
                 </div>
@@ -113,14 +113,14 @@ export const ContactSection: React.FC = () => {
                   <MapPin className="w-5 h-5" />
                 </div>
                 <div>
-                  <div className="text-xs text-slate-500 font-mono">Location</div>
-                  <div className="text-sm font-semibold text-slate-200">Remote • Open to collaboration</div>
+                  <div className="text-xs text-[var(--text-muted)] font-mono">Location</div>
+                  <div className="text-sm font-semibold text-[var(--text-secondary)]">Remote • Open to collaboration</div>
                 </div>
               </div>
 
               <a
                 href="/samarth-resume.pdf"
-                className="inline-flex items-center gap-2 text-sm font-semibold text-cyan-300 hover:text-cyan-200 transition-colors"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--accent)] hover:text-[var(--accent-strong)] transition-colors"
               >
                 <span>Download Resume</span>
               </a>
@@ -133,7 +133,7 @@ export const ContactSection: React.FC = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="lg:col-span-7 bg-slate-900/60 p-6 sm:p-8 rounded-2xl border border-slate-800 shadow-2xl backdrop-blur-md"
+            className="lg:col-span-7 bg-[rgba(15,23,42,0.72)] p-6 sm:p-8 rounded-2xl border border-[var(--border-subtle)] shadow-[0_24px_50px_rgba(2,6,23,0.26)] backdrop-blur-md"
           >
             {submitted ? (
               <div className="py-12 text-center space-y-3">
@@ -145,7 +145,7 @@ export const ContactSection: React.FC = () => {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-5">
-                <h4 className="text-lg font-bold text-slate-100 mb-4">Send a Direct Message</h4>
+                <h4 className="text-lg font-bold text-[var(--text-primary)] mb-4">Send a Direct Message</h4>
                 <input
                   type="text"
                   value={formData.company}
@@ -158,7 +158,7 @@ export const ContactSection: React.FC = () => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Your Name</label>
+                    <label className="block text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider mb-2">Your Name</label>
                     <input
                       type="text"
                       required
@@ -169,7 +169,7 @@ export const ContactSection: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Your Email</label>
+                    <label className="block text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider mb-2">Your Email</label>
                     <input
                       type="email"
                       required
@@ -182,14 +182,14 @@ export const ContactSection: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Message</label>
+                  <label className="block text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider mb-2">Message</label>
                   <textarea
                     rows={4}
                     required
                     value={formData.message}
                     onChange={(e) => handleFieldChange('message', e.target.value)}
                     placeholder="Tell me about your project or query..."
-                    className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-slate-100 text-sm focus:outline-none focus:border-cyan-500 transition-colors resize-none"
+                    className="w-full px-4 py-3 rounded-xl bg-[rgba(2,6,23,0.72)] border border-[var(--border-subtle)] text-[var(--text-primary)] text-sm focus:outline-none focus:border-[rgba(125,211,252,0.46)] transition-colors resize-none"
                   />
                 </div>
 
@@ -203,7 +203,7 @@ export const ContactSection: React.FC = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-indigo-600 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white font-bold text-sm transition-all shadow-lg flex items-center justify-center gap-2 disabled:cursor-not-allowed disabled:opacity-70"
+                  className="w-full py-3.5 px-6 rounded-xl bg-[linear-gradient(135deg,rgba(125,211,252,0.14),rgba(167,139,250,0.12),rgba(15,23,42,0.9))] hover:-translate-y-0.5 border border-[rgba(125,211,252,0.22)] text-[var(--text-primary)] font-bold text-sm transition-all shadow-[0_18px_35px_rgba(2,6,23,0.22)] flex items-center justify-center gap-2 disabled:cursor-not-allowed disabled:opacity-70"
                 >
                   <Send className="w-4 h-4" />
                   <span>{isSubmitting ? 'Sending...' : 'Send Message'}</span>

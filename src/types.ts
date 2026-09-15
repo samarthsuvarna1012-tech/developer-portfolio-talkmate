@@ -40,6 +40,14 @@ export interface PromptTemplate {
   icon: string;
 }
 
+export type ProjectStatus = 'live' | 'development' | 'pre-release' | 'coming-soon';
+
+export interface DeploymentInfo {
+  provider: string;
+  url: string;
+  region?: string;
+}
+
 export interface Project {
   id: string;
   title: string;
@@ -52,6 +60,10 @@ export interface Project {
   isFeatured?: boolean;
   image?: string;
   stats?: string;
+  status?: ProjectStatus;
+  deployment?: DeploymentInfo;
+  architectureUrl?: string;
+  docsUrl?: string;
 }
 
 export interface ExperienceItem {

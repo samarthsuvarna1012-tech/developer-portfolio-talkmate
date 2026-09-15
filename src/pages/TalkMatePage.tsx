@@ -452,15 +452,20 @@ export const TalkMatePage: React.FC<TalkMatePageProps> = ({ onNavigate }) => {
     }
   };
 
-  const copyToClipboard = (text: string, id: string) => {
-    navigator.clipboard.writeText(text);
-    setCopiedId(id);
-    setTimeout(() => setCopiedId(null), 2000);
+  const copyToClipboard = async (text: string, id: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedId(id);
+      setTimeout(() => setCopiedId(null), 2000);
+    } catch (error) {
+      console.error('Clipboard copy failed:', error);
+      showNotice('error', 'Clipboard access was blocked. Please copy the text manually.');
+    }
   };
 
   const speakMessage = (content: string, id: string) => {
     if (!('speechSynthesis' in window)) {
-      alert('Text-to-speech is not supported in your browser.');
+      showNotice('error', 'Text-to-speech is not supported in your browser.');
       return;
     }
 
@@ -529,12 +534,12 @@ export const TalkMatePage: React.FC<TalkMatePageProps> = ({ onNavigate }) => {
   );
 
   return (
-    <div className="min-h-screen bg-[#030712] text-slate-100 pt-20 pb-12 flex flex-col justify-between relative overflow-hidden">
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(34,211,238,0.14),transparent_30%),radial-gradient(circle_at_bottom_right,_rgba(99,102,241,0.12),transparent_32%),rgba(7,21,34,0.38)] text-slate-100 pt-20 pb-12 flex flex-col justify-between relative overflow-hidden">
       {/* Dynamic Background */}
       <FuturisticBackground />
 
       {/* Top Header & Navigation Bar */}
-      <div className="bg-slate-900/90 border-b border-slate-800 px-4 sm:px-6 py-3.5 sticky top-16 z-30 backdrop-blur-md">
+      <div className="bg-slate-900/25 border-b border-slate-700/50 px-4 sm:px-6 py-3.5 sticky top-16 z-30 backdrop-blur-md shadow-[0_10px_30px_rgba(15,23,42,0.18)]">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
           
           <div className="flex items-center gap-3 min-w-0">
@@ -570,7 +575,7 @@ export const TalkMatePage: React.FC<TalkMatePageProps> = ({ onNavigate }) => {
 
           {/* Controls & Server Status */}
           <div className="flex items-center gap-2 shrink-0">
-            <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-slate-950 border border-slate-800 text-xs font-mono">
+            <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-slate-950/55 border border-slate-800 text-xs font-mono">
               <span className={`w-2 h-2 rounded-full shrink-0 ${serverStatus?.status === 'ok' ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'}`} />
               <span className="text-slate-400 whitespace-nowrap text-[11px] hidden sm:inline">
                 {serverStatus?.status === 'ok' ? 'Server Ready' : 'Connecting'}
@@ -606,101 +611,6 @@ export const TalkMatePage: React.FC<TalkMatePageProps> = ({ onNavigate }) => {
         </div>
       )}
 
-      <motion.section
-        initial={{ opacity: 0, y: 18 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-        className="max-w-7xl w-full mx-auto px-4 sm:px-6 pt-6 relative z-10"
-      >
-        <div className="rounded-[1.45rem] border border-slate-800/80 bg-slate-900/70 p-6 sm:p-8 shadow-[0_24px_70px_rgba(2,6,23,0.35)] backdrop-blur-md">
-          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-7">
-            <div className="max-w-2xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-[11px] font-semibold uppercase tracking-[0.24em] mb-4">
-                <Cpu className="w-3.5 h-3.5" />
-                TalkMate architecture
-              </div>
-              <h2 className="text-2xl sm:text-3xl font-bold text-slate-100">A simple, teachable AI workflow built for learning and experimentation</h2>
-              <p className="mt-3 text-sm sm:text-base text-slate-400 leading-relaxed">
-                This project is more than a polished chat demo. It connects a React client, a Vercel serverless API, and Gemini streaming so the experience feels interactive while keeping the AI integration understandable.
-              </p>
-            </div>
-            <div className="rounded-2xl border border-slate-800 bg-slate-950/70 px-4 py-3 text-sm text-slate-300 max-w-sm">
-              <div className="font-semibold text-slate-100 mb-2">What this teaches</div>
-              <ul className="space-y-1.5 text-slate-400">
-                <li>• Streaming UIs with SSE</li>
-                <li>• Server-side AI requests</li>
-                <li>• File handling and validation</li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 xl:grid-cols-[1.1fr_0.9fr] gap-6">
-            <div className="rounded-2xl border border-slate-800/80 bg-slate-950/70 p-5">
-              <div className="flex items-center gap-2 text-cyan-300 text-sm font-semibold mb-4">
-                <Sparkles className="w-4 h-4" />
-                Flow overview
-              </div>
-              <div className="grid gap-3 sm:grid-cols-4 text-center text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">
-                <div className="rounded-xl border border-slate-800 bg-slate-900/80 p-3">React client</div>
-                <div className="rounded-xl border border-slate-800 bg-slate-900/80 p-3">Serverless API</div>
-                <div className="rounded-xl border border-slate-800 bg-slate-900/80 p-3">Gemini API</div>
-                <div className="rounded-xl border border-slate-800 bg-slate-900/80 p-3">Streamed reply</div>
-              </div>
-              <div className="mt-4 rounded-2xl border border-slate-800/70 bg-gradient-to-r from-indigo-950/60 via-slate-900 to-cyan-950/40 p-4 text-sm text-slate-300">
-                <p className="mb-2 text-slate-200 font-semibold">Request path</p>
-                <p className="leading-relaxed">
-                  The React interface sends chat messages and optional files to a Vercel serverless function. The function validates the request, forwards it to Gemini, and streams the response back to the browser as the assistant answers.
-                </p>
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <div className="rounded-2xl border border-slate-800/80 bg-slate-950/70 p-5">
-                <div className="flex items-center gap-2 text-cyan-300 text-sm font-semibold mb-3">
-                  <Activity className="w-4 h-4" />
-                  Why SSE?
-                </div>
-                <p className="text-sm text-slate-400 leading-relaxed">
-                  Server-Sent Events let the app stream tokens incrementally so the chat feels responsive and more like a live conversation than a delayed full-page update.
-                </p>
-              </div>
-
-              <div className="rounded-2xl border border-slate-800/80 bg-slate-950/70 p-5">
-                <div className="flex items-center gap-2 text-cyan-300 text-sm font-semibold mb-3">
-                  <ShieldCheck className="w-4 h-4" />
-                  Why server-side AI calls?
-                </div>
-                <p className="text-sm text-slate-400 leading-relaxed">
-                  The API key stays on the server, which keeps the browser from exposing credentials and makes the app easier to reason about in a portfolio setting.
-                </p>
-              </div>
-
-              <div className="rounded-2xl border border-slate-800/80 bg-slate-950/70 p-5">
-                <div className="flex items-center gap-2 text-cyan-300 text-sm font-semibold mb-3">
-                  <UploadCloud className="w-4 h-4" />
-                  File handling
-                </div>
-                <p className="text-sm text-slate-400 leading-relaxed">
-                  Files are accepted up to a modest size limit, validated by MIME type and size, and passed into the AI request with clear error feedback when something is unsupported.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-6 rounded-2xl border border-slate-800/80 bg-slate-950/70 p-5">
-            <div className="flex items-center gap-2 text-cyan-300 text-sm font-semibold mb-3">
-              <BookOpen className="w-4 h-4" />
-              What I learned
-            </div>
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 text-sm text-slate-400">
-              <div className="rounded-xl border border-slate-800 bg-slate-900/70 p-3">Connecting a frontend to LLM APIs</div>
-              <div className="rounded-xl border border-slate-800 bg-slate-900/70 p-3">Designing a streaming conversational UI</div>
-              <div className="rounded-xl border border-slate-800 bg-slate-900/70 p-3">Managing async state and error cases</div>
-              <div className="rounded-xl border border-slate-800 bg-slate-900/70 p-3">Thinking about security and validation</div>
-            </div>
-          </div>
-        </div>
-      </motion.section>
 
       {/* Main Responsive Grid Layout */}
       <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 flex-1 relative z-10">
@@ -708,7 +618,7 @@ export const TalkMatePage: React.FC<TalkMatePageProps> = ({ onNavigate }) => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* Left Column: Centered AI Orb Showcase & Waveform Visualizer */}
-          <div className="lg:col-span-5 flex flex-col items-center justify-center p-6 bg-slate-900/60 border border-slate-800/80 rounded-2xl backdrop-blur-md shadow-2xl space-y-5 lg:sticky lg:top-28 relative overflow-hidden group">
+          <div className="lg:col-span-5 flex flex-col items-center justify-center p-6 bg-slate-900/18 border border-slate-700/45 rounded-2xl backdrop-blur-md shadow-2xl space-y-5 lg:sticky lg:top-28 relative overflow-hidden group">
             
             {/* Centered Spotlight Behind Orb */}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,229,255,0.12)_0%,rgba(124,77,255,0.06)_45%,transparent_70%)] pointer-events-none transition-opacity duration-700" />
@@ -742,11 +652,11 @@ export const TalkMatePage: React.FC<TalkMatePageProps> = ({ onNavigate }) => {
 
             {/* Specs Row */}
             <div className="w-full grid grid-cols-2 gap-2 text-[11px] font-mono text-slate-400 pt-2 border-t border-slate-800/60">
-              <div className="bg-slate-950/70 p-2.5 rounded-xl border border-slate-800/80 text-center">
+                <div className="bg-slate-950/45 p-2.5 rounded-xl border border-slate-800/80 text-center">
                 <span className="text-slate-500 block text-[9px] uppercase tracking-wider">Tokens Est.</span>
                 <span className="text-cyan-300 font-bold">~{estimatedTokenCount} tokens</span>
               </div>
-              <div className="bg-slate-950/70 p-2.5 rounded-xl border border-slate-800/80 text-center">
+              <div className="bg-slate-950/45 p-2.5 rounded-xl border border-slate-800/80 text-center">
                 <span className="text-slate-500 block text-[9px] uppercase tracking-wider">Response Speed</span>
                 <span className="text-emerald-400 font-bold">~180ms SSE</span>
               </div>
@@ -758,11 +668,11 @@ export const TalkMatePage: React.FC<TalkMatePageProps> = ({ onNavigate }) => {
           <div className="lg:col-span-7 flex flex-col space-y-4 min-h-0">
             
             {/* Persona Switcher & Prompt Starters */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 bg-slate-900/90 border border-slate-800 rounded-2xl shadow-lg shrink-0">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 bg-slate-900/20 border border-slate-700/45 rounded-2xl shadow-lg shrink-0 backdrop-blur-sm">
               <div className="grid grid-cols-1 xs:grid-cols-2 sm:flex sm:flex-wrap items-center gap-2 sm:gap-2.5 w-full sm:w-auto">
                 <button
                   onClick={() => setActiveModal('persona')}
-                  className="w-full sm:w-auto px-3.5 py-2.5 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-700/80 hover:border-indigo-500/60 text-slate-100 text-xs font-semibold transition-all flex items-center justify-between gap-2 shadow-sm group min-w-0"
+                  className="w-full sm:w-auto px-3.5 py-2.5 rounded-xl bg-slate-950/55 hover:bg-slate-800 border border-slate-700/80 hover:border-indigo-500/60 text-slate-100 text-xs font-semibold transition-all flex items-center justify-between gap-2 shadow-sm group min-w-0"
                   title="Switch Persona (⌘K or Ctrl+K)"
                 >
                   <div className="flex items-center gap-2 min-w-0 truncate">
@@ -799,7 +709,7 @@ export const TalkMatePage: React.FC<TalkMatePageProps> = ({ onNavigate }) => {
                     key={tmpl.id}
                     onClick={() => handleSendMessage(tmpl.prompt)}
                     disabled={isLoading}
-                    className="px-2.5 py-1 rounded-lg bg-slate-950 hover:bg-indigo-950/80 border border-slate-800 hover:border-indigo-500/60 text-slate-300 hover:text-cyan-300 text-[11px] font-medium transition-all whitespace-nowrap shrink-0 shadow-sm"
+                    className="px-2.5 py-1 rounded-lg bg-slate-950/55 hover:bg-indigo-950/80 border border-slate-800 hover:border-indigo-500/60 text-slate-300 hover:text-cyan-300 text-[11px] font-medium transition-all whitespace-nowrap shrink-0 shadow-sm"
                   >
                     {tmpl.title}
                   </button>
@@ -812,7 +722,7 @@ export const TalkMatePage: React.FC<TalkMatePageProps> = ({ onNavigate }) => {
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
               onDrop={handleDrop}
-              className={`flex flex-col h-[520px] sm:h-[600px] bg-slate-900/60 rounded-2xl border transition-colors overflow-hidden shadow-2xl relative flex-1 ${
+              className={`flex flex-col h-[520px] sm:h-[600px] bg-slate-900/20 rounded-2xl border border-slate-700/45 transition-colors overflow-hidden shadow-2xl relative flex-1 backdrop-blur-sm ${
                 isDraggingFile ? 'border-cyan-400 bg-indigo-950/40 ring-2 ring-cyan-400/50' : 'border-slate-800'
               }`}
             >
@@ -826,7 +736,7 @@ export const TalkMatePage: React.FC<TalkMatePageProps> = ({ onNavigate }) => {
               )}
               
               {/* Header Bar */}
-              <div className="bg-slate-950 px-5 py-3 border-b border-slate-800 flex items-center justify-between text-xs text-slate-400 font-mono">
+              <div className="bg-slate-950/65 px-5 py-3 border-b border-slate-800 flex items-center justify-between text-xs text-slate-400 font-mono">
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-cyan-400" />
                   <span>Persona: <strong className="text-cyan-300 font-semibold">{selectedPersona.name}</strong></span>
@@ -898,7 +808,7 @@ export const TalkMatePage: React.FC<TalkMatePageProps> = ({ onNavigate }) => {
                               className={`p-4 rounded-2xl text-sm leading-relaxed ${
                                 isUser
                                   ? 'bg-indigo-600 text-white rounded-tr-none shadow-md'
-                                  : 'bg-slate-950/90 text-slate-200 border border-slate-800/80 rounded-tl-none shadow-lg'
+                                  : 'bg-slate-950/65 text-slate-200 border border-slate-800/80 rounded-tl-none shadow-lg'
                               }`}
                             >
                               {isUser ? (
@@ -913,8 +823,8 @@ export const TalkMatePage: React.FC<TalkMatePageProps> = ({ onNavigate }) => {
                                         if (!inline && (match || codeString.includes('\n'))) {
                                           const lang = match ? match[1] : 'code';
                                           return (
-                                            <div className="relative my-3 rounded-xl border border-slate-800 bg-slate-950 overflow-hidden font-mono text-xs">
-                                              <div className="flex items-center justify-between px-3.5 py-1.5 bg-slate-900 border-b border-slate-800 text-[11px] text-slate-400">
+                                            <div className="relative my-3 rounded-xl border border-slate-800 bg-slate-950/70 overflow-hidden font-mono text-xs">
+                                              <div className="flex items-center justify-between px-3.5 py-1.5 bg-slate-900/70 border-b border-slate-800 text-[11px] text-slate-400">
                                                 <span className="text-cyan-400 font-semibold uppercase">{lang}</span>
                                                 <button
                                                   onClick={() => copyToClipboard(codeString, `code-${Math.random()}`)}
@@ -1023,8 +933,8 @@ export const TalkMatePage: React.FC<TalkMatePageProps> = ({ onNavigate }) => {
               )}
 
               {/* Input Area */}
-              <div className="p-4 bg-slate-950 border-t border-slate-800">
-                <div className="flex items-end gap-2 bg-slate-900 p-2.5 rounded-xl border border-slate-800 focus-within:border-cyan-500/60 transition-colors">
+              <div className="p-4 bg-slate-950/65 border-t border-slate-800">
+                <div className="flex items-end gap-2 bg-slate-900/65 p-2.5 rounded-xl border border-slate-800 focus-within:border-cyan-500/60 transition-colors">
                   
                   <input
                     type="file"
@@ -1085,6 +995,102 @@ export const TalkMatePage: React.FC<TalkMatePageProps> = ({ onNavigate }) => {
         </div>
 
       </div>
+
+      <motion.section
+        initial={{ opacity: 0, y: 18 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+        className="max-w-7xl w-full mx-auto px-4 sm:px-6 pt-6 relative z-10"
+      >
+        <div className="rounded-[1.45rem] border border-slate-700/80 bg-slate-900/45 p-6 sm:p-8 shadow-[0_24px_70px_rgba(2,6,23,0.38)] backdrop-blur-md">
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-7">
+            <div className="max-w-2xl">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-[11px] font-semibold uppercase tracking-[0.24em] mb-4">
+                <Cpu className="w-3.5 h-3.5" />
+                TalkMate architecture
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-bold text-slate-100">A simple, teachable AI workflow built for learning and experimentation</h2>
+              <p className="mt-3 text-sm sm:text-base text-slate-400 leading-relaxed">
+                This project is more than a polished chat demo. It connects a React client, a Vercel serverless API, and Gemini streaming so the experience feels interactive while keeping the AI integration understandable.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-slate-800 bg-slate-950/45 px-4 py-3 text-sm text-slate-300 max-w-sm">
+              <div className="font-semibold text-slate-100 mb-2">What this teaches</div>
+              <ul className="space-y-1.5 text-slate-400">
+                <li>• Streaming UIs with SSE</li>
+                <li>• Server-side AI requests</li>
+                <li>• File handling and validation</li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 xl:grid-cols-[1.1fr_0.9fr] gap-6">
+            <div className="rounded-2xl border border-slate-800/80 bg-slate-950/45 p-5">
+              <div className="flex items-center gap-2 text-cyan-300 text-sm font-semibold mb-4">
+                <Sparkles className="w-4 h-4" />
+                Flow overview
+              </div>
+              <div className="grid gap-3 sm:grid-cols-4 text-center text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">
+                <div className="rounded-xl border border-slate-800 bg-slate-900/55 p-3">React client</div>
+                <div className="rounded-xl border border-slate-800 bg-slate-900/55 p-3">Serverless API</div>
+                <div className="rounded-xl border border-slate-800 bg-slate-900/55 p-3">Gemini API</div>
+                <div className="rounded-xl border border-slate-800 bg-slate-900/55 p-3">Streamed reply</div>
+              </div>
+              <div className="mt-4 rounded-2xl border border-slate-800/70 bg-gradient-to-r from-indigo-950/60 via-slate-900 to-cyan-950/40 p-4 text-sm text-slate-300">
+                <p className="mb-2 text-slate-200 font-semibold">Request path</p>
+                <p className="leading-relaxed">
+                  The React interface sends chat messages and optional files to a Vercel serverless function. The function validates the request, forwards it to Gemini, and streams the response back to the browser as the assistant answers.
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <div className="rounded-2xl border border-slate-800/80 bg-slate-950/45 p-5">
+                <div className="flex items-center gap-2 text-cyan-300 text-sm font-semibold mb-3">
+                  <Activity className="w-4 h-4" />
+                  Why SSE?
+                </div>
+                <p className="text-sm text-slate-400 leading-relaxed">
+                  Server-Sent Events let the app stream tokens incrementally so the chat feels responsive and more like a live conversation than a delayed full-page update.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-slate-800/80 bg-slate-950/45 p-5">
+                <div className="flex items-center gap-2 text-cyan-300 text-sm font-semibold mb-3">
+                  <ShieldCheck className="w-4 h-4" />
+                  Why server-side AI calls?
+                </div>
+                <p className="text-sm text-slate-400 leading-relaxed">
+                  The API key stays on the server, which keeps the browser from exposing credentials and makes the app easier to reason about in a portfolio setting.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-slate-800/80 bg-slate-950/45 p-5">
+                <div className="flex items-center gap-2 text-cyan-300 text-sm font-semibold mb-3">
+                  <UploadCloud className="w-4 h-4" />
+                  File handling
+                </div>
+                <p className="text-sm text-slate-400 leading-relaxed">
+                  Files are accepted up to a modest size limit, validated by MIME type and size, and passed into the AI request with clear error feedback when something is unsupported.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-6 rounded-2xl border border-slate-800/80 bg-slate-950/45 p-5">
+            <div className="flex items-center gap-2 text-cyan-300 text-sm font-semibold mb-3">
+              <BookOpen className="w-4 h-4" />
+              What I learned
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 text-sm text-slate-400">
+              <div className="rounded-xl border border-slate-800 bg-slate-900/55 p-3">Connecting a frontend to LLM APIs</div>
+              <div className="rounded-xl border border-slate-800 bg-slate-900/55 p-3">Designing a streaming conversational UI</div>
+              <div className="rounded-xl border border-slate-800 bg-slate-900/55 p-3">Managing async state and error cases</div>
+              <div className="rounded-xl border border-slate-800 bg-slate-900/55 p-3">Thinking about security and validation</div>
+            </div>
+          </div>
+        </div>
+      </motion.section>
 
       {/* Conversations Drawer Side Modal */}
       {sessionDrawerOpen && (

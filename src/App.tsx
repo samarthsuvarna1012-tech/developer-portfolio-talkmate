@@ -10,6 +10,7 @@ import { ContactSection } from './components/ContactSection';
 
 const TalkMatePage = lazy(() => import('./pages/TalkMatePage').then((module) => ({ default: module.TalkMatePage })));
 const GlobalAIVoiceWidget = lazy(() => import('./components/GlobalAIVoiceWidget').then((module) => ({ default: module.GlobalAIVoiceWidget })));
+const Interactive3DBackground = lazy(() => import('./components/Interactive3DBackground'));
 
 export default function App() {
   const [isVoiceAgentActive, setIsVoiceAgentActive] = useState(false);
@@ -92,16 +93,23 @@ export default function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [currentPath]);
 
-  const navigateTo = (path: RoutePath) => {
-    isNavigatingRef.current = true;
-    setCurrentPath(path);
-    window.history.pushState({}, '', path);
+  const navigateTo = (path: RoutePath | string) => {
+    const normalizedPath = String(path || '/').trim();
 
-    if (path === '/talkmate') {
+    if (!normalizedPath.startsWith('/') || normalizedPath.startsWith('//')) {
+      window.open(normalizedPath, '_blank', 'noopener,noreferrer');
+      return;
+    }
+
+    isNavigatingRef.current = true;
+    setCurrentPath(normalizedPath as RoutePath);
+    window.history.pushState({}, '', normalizedPath);
+
+    if (normalizedPath === '/talkmate') {
       window.scrollTo(0, 0);
       setTimeout(() => { isNavigatingRef.current = false; }, 400);
     } else {
-      const sectionId = path.replace('/', '') || 'home';
+      const sectionId = normalizedPath.replace('/', '') || 'home';
       setTimeout(() => {
         const el = document.getElementById(sectionId);
         if (el) {
@@ -115,7 +123,8 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#030712] text-slate-100 flex flex-col selection:bg-cyan-500 selection:text-slate-950 font-sans">
+    <div className="min-h-screen bg-[var(--bg-canvas)] text-[var(--text-primary)] flex flex-col selection:bg-[var(--accent-strong)] selection:text-[var(--bg-canvas)] font-sans antialiased">
+      <Suspense fallback={null}><Interactive3DBackground /></Suspense>
       <a
         href="#main-content"
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-cyan-500 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-slate-950 focus:outline-none focus:ring-2 focus:ring-cyan-300"

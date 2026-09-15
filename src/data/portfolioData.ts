@@ -1,4 +1,4 @@
-import { AIPersona, PromptTemplate, Project, ExperienceItem } from '../types';
+import { AIPersona, PromptTemplate, Project, ExperienceItem, ProjectStatus, DeploymentInfo } from '../types';
 
 export const AI_PERSONAS: AIPersona[] = [
   {
@@ -106,28 +106,66 @@ export const PROMPT_TEMPLATES: PromptTemplate[] = [
 
 export const PORTFOLIO_PROJECTS: Project[] = [
   {
+    id: 'devos',
+    title: 'DevOS',
+    tagline: 'Developer Workflow Concept',
+    description: 'A concept project exploring how a developer workspace could combine notes, planning, code context, and project thinking into one place. It is a practical idea for organizing work and keeping development flow focused.',
+    category: 'DevTools',
+    tags: ['TypeScript', 'Node.js', 'Workflow', 'Project Thinking', 'Developer Tools'],
+    link: undefined,
+    githubUrl: undefined,
+    isFeatured: true,
+    stats: 'Concept Project • Learning',
+    status: 'development',
+    deployment: { provider: 'local', url: '' },
+    architectureUrl: undefined,
+    docsUrl: undefined
+  },
+  {
+    id: 'codemaker',
+    title: 'CodeMaker AI',
+    tagline: 'Project Workspace Prototype',
+    description: 'A prototype workspace for exploring how AI can help with project structure, code understanding, and development workflows without turning the process into a black box.',
+    category: 'DevTools',
+    tags: ['React', 'TypeScript', 'AI Assistants', 'Project Tools', 'Code Exploration'],
+    link: 'https://codemaker-ai.vercel.app/',
+    githubUrl: undefined,
+    isFeatured: true,
+    stats: 'Prototype • Workspace',
+    status: 'live',
+    deployment: { provider: 'vercel', url: 'https://codemaker-ai.vercel.app/' },
+    architectureUrl: undefined,
+    docsUrl: undefined
+  },
+  {
     id: 'talkmate-ai',
     title: 'TalkMate AI',
-    tagline: 'A voice-friendly AI assistant built into this portfolio',
-    description: 'TalkMate brings together a React chat interface, Vercel serverless functions, and Gemini-powered streaming responses. The project helped me explore secure AI requests, conversational UI, file handling, and accessible interaction design.',
+    tagline: 'Small AI Chat Experiment',
+    description: 'A lightweight chat project built to explore AI conversations, prompt design, and how a frontend can pair with a backend API to create a smoother experience.',
     category: 'AI',
-    tags: ['React 19', 'TypeScript', 'Vercel Functions', 'Streaming AI', 'Voice UI'],
+    tags: ['React 19', 'TypeScript', 'Vercel Functions', 'Streaming', 'Chat UI', 'AI Experiments'],
     link: '/talkmate',
     githubUrl: 'https://github.com/samarthsuvarna1012-tech/developer-portfolio-talkmate',
     isFeatured: true,
-    stats: 'Portfolio Highlight • AI Assistant'
+    stats: 'Portfolio Highlight • Learning Project',
+    status: 'live',
+    deployment: { provider: 'vercel', url: '/talkmate' }
   },
   {
-    id: 'developer-portfolio',
-    title: 'Developer Portfolio',
-    tagline: 'A student portfolio site focused on clarity and learning',
-    description: 'This portfolio is a place to share projects, explain engineering choices, and present work in a way that feels honest, practical, and student-focused. It also includes a TalkMate experience and a real contact form handled by serverless functions.',
-    category: 'Full-Stack',
-    tags: ['React', 'TypeScript', 'Vite', 'Vercel Functions', 'Portfolio UX'],
-    link: '/projects',
-    githubUrl: 'https://github.com/samarthsuvarna1012-tech/developer-portfolio-talkmate',
+    id: 'evolvex',
+    title: 'EVOLVEX',
+    tagline: 'Experimental Idea Lab',
+    description: 'An experimental concept focused on systems, automation, and iterative problem solving. It is more of a research-style idea space than a finished product.',
+    category: 'DevTools',
+    tags: ['Research', 'Experimentation', 'Systems Thinking', 'Automation', 'Exploration'],
+    link: undefined,
+    githubUrl: undefined,
     isFeatured: false,
-    stats: 'Portfolio • Web Experience'
+    stats: 'Experiment • Research',
+    status: 'pre-release',
+    deployment: { provider: 'local', url: '' },
+    architectureUrl: undefined,
+    docsUrl: undefined
   }
 ];
 
@@ -137,12 +175,12 @@ export const WORK_EXPERIENCE: ExperienceItem[] = [
     role: 'Computer Science Student',
     company: 'Independent Projects & Coursework',
     period: '2024 — Present',
-    description: 'Building portfolio projects and learning through hands-on experimentation with React, TypeScript, Vercel Functions, and AI integrations.',
+    description: 'Building portfolio projects and learning through hands-on work with React, TypeScript, and web app development.',
     technologies: ['React 19', 'TypeScript', 'Node.js', 'AI APIs', 'Vite'],
     achievements: [
-      'Built a portfolio site that explains projects, engineering decisions, and learning outcomes clearly.',
-      'Created TalkMate AI to explore streaming AI conversations, voice interaction, and file-aware chat experiences.',
-      'Improved frontend and backend communication by moving API calls to typed serverless functions.'
+      'Built a portfolio to document projects, ideas, and the decisions behind them.',
+      'Created TalkMate AI to explore chat interfaces, API integration, and practical frontend/backend flow.',
+      'Refined project structure and UI patterns by shipping and iterating on real work.'
     ]
   },
   {
@@ -150,12 +188,12 @@ export const WORK_EXPERIENCE: ExperienceItem[] = [
     role: 'Self-Directed Builder',
     company: 'Personal Learning Projects',
     period: '2023 — 2024',
-    description: 'Focused on practical web development skills through small apps, API integration, and iterative UI improvements.',
+    description: 'Focused on practical front-end work, small product ideas, and learning through building.',
     technologies: ['React', 'Vercel Functions', 'Tailwind CSS', 'REST APIs', 'GitHub'],
     achievements: [
-      'Learned how to structure a simple full-stack application with a clear separation between frontend and serverless API logic.',
-      'Practiced accessibility, responsive design, and user feedback patterns while improving interface quality.',
-      'Used GitHub and project documentation to communicate progress and decisions clearly.'
+      'Learned how to structure a simple full-stack app with a clear separation between frontend and backend logic.',
+      'Improved interface design and responsiveness through repeated iteration.',
+      'Used GitHub and documentation to track project progress and decisions.'
     ]
   }
 ];

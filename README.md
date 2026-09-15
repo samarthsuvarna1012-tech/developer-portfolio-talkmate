@@ -1,98 +1,37 @@
-# Developer Portfolio & TalkMate AI
+# Samarth Suvarna Portfolio
 
-A student-focused portfolio site built with React, TypeScript, Vite, Vercel Functions, and Gemini-powered AI streaming. The project highlights practical web development work, a conversational AI assistant experience, and the engineering choices behind it.
+This is my personal portfolio and project space. I built it to share the work I am making, the problems I am solving, and the ideas I am learning through hands-on projects.
 
-## Overview
+## What this project includes
 
-This portfolio is designed to feel like a capable student developer’s space: honest, curious, and focused on real projects. It includes:
+- A portfolio landing page and project overview
+- A small interactive AI experience called TalkMate
+- A contact section for reaching out
+- A few project experiments and product-style prototypes
 
-- A student-centered hero section and project showcase
-- A featured TalkMate AI experience with streaming chat, personas, voice interaction, and file handling
-- Vercel serverless functions for secure AI proxying and contact form handling
-- A clear, modern portfolio layout for projects, learning, and contact
+## Tech stack
 
-## Tech Stack
-
-- React 19 + TypeScript
+- React + TypeScript
 - Vite
 - Vercel Functions
-- Gemini API via Google GenAI
-- Tailwind CSS + motion animations
+- Gemini API
+- Tailwind CSS
 
-## Features
+## Why I built it
 
-- Responsive portfolio layout
-- TalkMate AI chat experience with SSE streaming
-- Multiple AI personas and prompt starters
-- File upload support and basic validation
-- Contact form delivery through a configurable Formspree endpoint, with server-side validation and rate-limit protection
+I wanted a place that feels like my own: a simple portfolio, a list of work I have built, and a way to show how I think about frontend development, product ideas, and practical engineering.
 
-## TalkMate AI
+## TalkMate
 
-TalkMate AI is the flagship project in this portfolio. It explores how a student can build an AI assistant experience end to end by combining a React frontend, Vercel Functions, and streaming LLM responses.
+TalkMate is a small experiment in building a chat experience that feels helpful and interactive without overcomplicating the product. It uses a frontend UI, a backend proxy, and streaming responses so the experience feels more natural.
 
-## Architecture
+## Local setup
 
-The app is split into a React frontend and native Vercel Functions:
+1. Install dependencies with `npm install`
+2. Add your environment variables in `.env.local`
+3. Start the app with `npm run dev`
+4. If needed, run the Vercel functions locally with `vercel dev`
 
-- React client handles the UI and chat state
-- Serverless API validates requests and keeps the Gemini API key server-side
-- Gemini responses are streamed back to the client using Server-Sent Events
+## Notes
 
-## Engineering Decisions
-
-- Server-side AI calls keep API credentials out of the browser
-- SSE provides a more responsive chat experience than waiting for a full payload
-- Personas are selected by ID and mapped to server-owned prompts, so the client cannot supply arbitrary system instructions
-- Chat requests have message, history, attachment, timeout, and rate limits to reduce accidental misuse
-- File handling is limited to validated MIME types and a 5 MB maximum to keep the experience predictable and safe
-
-## TalkMate AI Case Study
-
-### Why I built it
-
-I wanted to move beyond a static portfolio and learn what it takes to build an AI feature responsibly. TalkMate lets visitors ask about the portfolio, explore technical ideas, and try a conversational interface built around real frontend and backend concerns.
-
-### Architecture
-
-```text
-React + TypeScript UI
-        ↓
-Vercel Functions (validation, rate limits, server-owned personas)
-        ↓
-Gemini API
-        ↓
-Streaming response over Server-Sent Events (SSE)
-```
-
-### Engineering choices and challenges
-
-- **SSE:** streaming makes a response feel immediate and allows the UI to show progress instead of waiting for one large response.
-- **Vercel Functions:** the serverless API keeps the Gemini key out of the browser and provides a single place for validation, timeouts, and abuse controls.
-- **Server-owned personas:** the UI chooses an approved persona ID; the corresponding instruction remains on the server.
-- **Async UI state:** the chat tracks sending, streaming, retry, errors, saved sessions, and automatic scrolling without blocking the rest of the page.
-- **Voice and files:** the interface gives helpful feedback for unsupported speech features, permission failures, and invalid uploads.
-
-### What I learned
-
-This project taught me how AI APIs, streaming, frontend state management, backend boundaries, input validation, and prompt design work together in a real product feature.
-
-> TalkMate is a personal AI project. Responses may occasionally be inaccurate.
-
-## What I Learned
-
-- How to connect frontend applications to LLM APIs
-- How to build streaming interfaces with SSE
-- How to structure serverless APIs for AI-backed features
-- How to think about accessibility, validation, and secure API use in student projects
-
-## Run Locally
-
-1. Install dependencies: npm install
-2. Copy .env.example to .env.local, add your Gemini API key, and configure a Formspree `CONTACT_FORM_ENDPOINT` if you want the contact form to deliver messages
-3. Start the frontend: npm run dev
-4. Use `vercel dev` when you also need to run the local Vercel Functions.
-
-## Deploy to Vercel
-
-Import the repository into Vercel, then configure `GEMINI_API_KEY` and (optionally) `CONTACT_FORM_ENDPOINT` in Project Settings → Environment Variables. The included rewrite serves all non-API paths through the React SPA while allowing `/api/chat`, `/api/contact`, and `/api/health` to reach their functions.
+This site is meant to feel personal and honest rather than overly polished or generic. It reflects the kind of work I am building while learning and shipping.

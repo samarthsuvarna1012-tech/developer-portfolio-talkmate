@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Bot, ExternalLink, Sparkles, ArrowRight, Code2, Search, Filter, Github } from 'lucide-react';
+import { Bot, ExternalLink, Sparkles, ArrowRight, Code2, Search, Filter, Github, ArrowDown, Shield, Cpu } from 'lucide-react';
 import { motion } from 'motion/react';
 import { PORTFOLIO_PROJECTS } from '../data/portfolioData';
 import { RoutePath, Project } from '../types';
+import { EcosystemVisualization } from './EcosystemVisualization';
 
 interface ProjectsSectionProps {
   onNavigate: (path: RoutePath) => void;
@@ -12,7 +13,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onNavigate }) 
   const [activeCategory, setActiveCategory] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState<string>('');
 
-  const categories = ['All', 'AI', 'Full-Stack', 'Cloud'];
+  const categories = ['All', 'AI', 'DevTools', 'Full-Stack', 'Cloud'];
 
   const filteredProjects = PORTFOLIO_PROJECTS.filter((project: Project) => {
     const matchesCategory = activeCategory === 'All' || project.category === activeCategory;
@@ -25,7 +26,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onNavigate }) 
   });
 
   return (
-    <section id="projects" className="section-anchor py-20 bg-[#030712] border-t border-slate-900/80 relative z-10">
+    <section id="projects" className="section-anchor py-20 bg-[#030712]/55 border-t border-slate-900/80 relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
@@ -39,7 +40,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onNavigate }) 
             </h3>
           </div>
           <p className="text-slate-400 text-sm max-w-md">
-            Including full-stack applications, developer tooling, and custom server-side AI integrations.
+            A few of the projects I have built while learning, shipping, and improving my frontend and product ideas.
           </p>
         </div>
 
@@ -58,7 +59,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onNavigate }) 
               </div>
               <h4 className="text-2xl sm:text-3xl font-bold text-slate-100 mb-3">TalkMate AI</h4>
               <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
-                A personal project exploring how a React interface, Vercel serverless functions, and Gemini-powered streaming can feel like a real conversational assistant rather than a static demo.
+                A personal project focused on building a simple chat experience with React, a server-side API, and streaming responses so the interface feels smoother and more useful.
               </p>
             </div>
             <div className="flex flex-wrap gap-2">
@@ -110,6 +111,10 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onNavigate }) 
                 }`}
               >
                 {cat === 'All' && <Filter className="w-3.5 h-3.5" />}
+                {cat === 'AI' && <Bot className="w-3.5 h-3.5" />}
+                {cat === 'DevTools' && <Code2 className="w-3.5 h-3.5" />}
+                {cat === 'Full-Stack' && <Cpu className="w-3.5 h-3.5" />}
+                {cat === 'Cloud' && <Shield className="w-3.5 h-3.5" />}
                 <span>{cat}</span>
               </button>
             ))}
@@ -127,6 +132,9 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onNavigate }) 
             />
           </div>
         </div>
+
+        {/* Ecosystem Visualization */}
+        <EcosystemVisualization className="mb-16" />
 
         {/* Projects Grid */}
         {filteredProjects.length === 0 ? (
@@ -218,23 +226,42 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onNavigate }) 
                       </button>
                     ) : (
                       <div className="flex items-center gap-3">
-                        <button
-                          onClick={() => onNavigate('/projects')}
-                          className="flex-1 py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs border border-slate-700 transition-colors flex items-center justify-center gap-2"
-                        >
-                          <span>View Overview</span>
-                          <ExternalLink className="w-3.5 h-3.5" />
-                        </button>
+                        {project.link && (
+                          project.link.startsWith('http') ? (
+                            <a
+                              href={project.link}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="flex-1 py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs border border-slate-700 transition-colors flex items-center justify-center gap-2"
+                            >
+                              <span>View Overview</span>
+                              <ExternalLink className="w-3.5 h-3.5" />
+                            </a>
+                          ) : (
+                            <button
+                              onClick={() => onNavigate(project.link as RoutePath)}
+                              className="flex-1 py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs border border-slate-700 transition-colors flex items-center justify-center gap-2"
+                            >
+                              <span>View Overview</span>
+                              <ExternalLink className="w-3.5 h-3.5" />
+                            </button>
+                          )
+                        )}
                         {project.githubUrl && (
                           <a
                             href={project.githubUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="p-3 rounded-xl bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-slate-300 hover:text-white transition-colors"
+                            className={`p-3 rounded-xl bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-slate-300 hover:text-white transition-colors ${!project.link ? 'flex-1' : ''}`}
                             title="GitHub Source"
                           >
                             <Github className="w-4 h-4" />
                           </a>
+                        )}
+                        {!project.link && !project.githubUrl && (
+                          <span className="flex-1 py-3 px-4 rounded-xl bg-slate-800/50 border border-slate-700/50 text-slate-500 font-semibold text-xs text-center">
+                            In Development
+                          </span>
                         )}
                       </div>
                     )}

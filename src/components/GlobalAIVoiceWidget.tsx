@@ -211,7 +211,7 @@ export const GlobalAIVoiceWidget: React.FC<GlobalAIVoiceWidgetProps> = ({ isActi
   if (!isActive) return null;
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 max-w-sm w-full animate-in slide-in-from-bottom duration-300 pointer-events-auto">
+    <div className="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:bottom-6 z-50 w-auto sm:w-[calc(100%-3rem)] max-w-sm animate-in slide-in-from-bottom duration-300 pointer-events-auto">
       <div className="bg-slate-900/95 backdrop-blur-md border border-cyan-500/40 rounded-2xl shadow-2xl p-4 text-slate-100 space-y-3 ring-1 ring-cyan-500/20">
         
         {/* Header Bar */}

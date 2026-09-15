@@ -1,6 +1,6 @@
 {
-  "name": "Developer Portfolio & TalkMate AI",
-  "description": "Personal developer portfolio featuring the TalkMate AI interactive assistant page.",
+  "name": "Samarth Suvarna Portfolio",
+  "description": "Personal portfolio showcasing my web projects, experiments, and project work.",
   "requestFramePermissions": ["microphone"],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
